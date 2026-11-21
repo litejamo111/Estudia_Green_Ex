@@ -1,0 +1,208 @@
+{
+  "corte": "2026-10-31",
+  "horizonte_dias": 60,
+  "kpis": {
+    "clientes": 120,
+    "frios": 48,
+    "por_vencer": 14,
+    "en_ventana": 35,
+    "recientes": 23,
+    "riesgo_promedio": 0.3458,
+    "alto_riesgo": 58,
+    "clientes_prioridad_alta": 20
+  },
+  "top_riesgo": [
+    {
+      "cliente_id": "CLI016",
+      "nombre": "Cliente de prueba 016",
+      "estado": "frio",
+      "riesgo_desercion": 0.484,
+      "dias_sin_compra": 219,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI076",
+      "nombre": "Cliente de prueba 076",
+      "estado": "frio",
+      "riesgo_desercion": 0.4718,
+      "dias_sin_compra": 194,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI061",
+      "nombre": "Cliente de prueba 061",
+      "estado": "frio",
+      "riesgo_desercion": 0.4714,
+      "dias_sin_compra": 184,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI011",
+      "nombre": "Cliente de prueba 011",
+      "estado": "frio",
+      "riesgo_desercion": 0.4616,
+      "dias_sin_compra": 215,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI001",
+      "nombre": "Cliente de prueba 001",
+      "estado": "frio",
+      "riesgo_desercion": 0.4614,
+      "dias_sin_compra": 212,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI106",
+      "nombre": "Cliente de prueba 106",
+      "estado": "frio",
+      "riesgo_desercion": 0.4613,
+      "dias_sin_compra": 210,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI041",
+      "nombre": "Cliente de prueba 041",
+      "estado": "frio",
+      "riesgo_desercion": 0.4606,
+      "dias_sin_compra": 191,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI081",
+      "nombre": "Cliente de prueba 081",
+      "estado": "frio",
+      "riesgo_desercion": 0.4524,
+      "dias_sin_compra": 261,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI096",
+      "nombre": "Cliente de prueba 096",
+      "estado": "frio",
+      "riesgo_desercion": 0.4493,
+      "dias_sin_compra": 186,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI113",
+      "nombre": "Cliente de prueba 113",
+      "estado": "frio",
+      "riesgo_desercion": 0.4465,
+      "dias_sin_compra": 118,
+      "prioridad": "alta"
+    }
+  ],
+  "productos": [
+    {
+      "producto_id": "PRO04",
+      "nombre": "Implementación documental",
+      "familia": "Servicios",
+      "tipo": "Único",
+      "p_recompra_60d": 0.1723,
+      "clientes_con_compra": 79,
+      "clientes_en_ventana": 28,
+      "clientes_frios": 42,
+      "ingreso_90d_cop": 177240000.0
+    },
+    {
+      "producto_id": "PRO09",
+      "nombre": "Revisión de continuidad",
+      "familia": "Servicios",
+      "tipo": "Único",
+      "p_recompra_60d": 0.1461,
+      "clientes_con_compra": 86,
+      "clientes_en_ventana": 31,
+      "clientes_frios": 40,
+      "ingreso_90d_cop": 106835000.0
+    },
+    {
+      "producto_id": "PRO07",
+      "nombre": "Capacitación de usuarios",
+      "familia": "Servicios",
+      "tipo": "Único",
+      "p_recompra_60d": 0.1286,
+      "clientes_con_compra": 75,
+      "clientes_en_ventana": 31,
+      "clientes_frios": 38,
+      "ingreso_90d_cop": 78444000.0
+    },
+    {
+      "producto_id": "PRO01",
+      "nombre": "Licencia de gestión documental",
+      "familia": "Software",
+      "tipo": "Recurrente",
+      "p_recompra_60d": 0.1744,
+      "clientes_con_compra": 80,
+      "clientes_en_ventana": 34,
+      "clientes_frios": 39,
+      "ingreso_90d_cop": 65270606.04
+    },
+    {
+      "producto_id": "PRO10",
+      "nombre": "Digitalización de prueba",
+      "familia": "Servicios",
+      "tipo": "Único",
+      "p_recompra_60d": 0.1288,
+      "clientes_con_compra": 83,
+      "clientes_en_ventana": 25,
+      "clientes_frios": 46,
+      "ingreso_90d_cop": 58532500.0
+    },
+    {
+      "producto_id": "PRO05",
+      "nombre": "Migración de información",
+      "familia": "Servicios",
+      "tipo": "Único",
+      "p_recompra_60d": 0.1681,
+      "clientes_con_compra": 74,
+      "clientes_en_ventana": 22,
+      "clientes_frios": 48,
+      "ingreso_90d_cop": 51205000.0
+    },
+    {
+      "producto_id": "PRO03",
+      "nombre": "Soporte operativo",
+      "familia": "Soporte",
+      "tipo": "Recurrente",
+      "p_recompra_60d": 0.1551,
+      "clientes_con_compra": 77,
+      "clientes_en_ventana": 19,
+      "clientes_frios": 47,
+      "ingreso_90d_cop": 41880000.0
+    },
+    {
+      "producto_id": "PRO08",
+      "nombre": "Licencia de consulta",
+      "familia": "Software",
+      "tipo": "Recurrente",
+      "p_recompra_60d": 0.1444,
+      "clientes_con_compra": 80,
+      "clientes_en_ventana": 24,
+      "clientes_frios": 46,
+      "ingreso_90d_cop": 37801167.28
+    },
+    {
+      "producto_id": "PRO06",
+      "nombre": "Almacenamiento de información",
+      "familia": "Continuidad",
+      "tipo": "Recurrente",
+      "p_recompra_60d": 0.1456,
+      "clientes_con_compra": 74,
+      "clientes_en_ventana": 21,
+      "clientes_frios": 39,
+      "ingreso_90d_cop": 35121327.56
+    },
+    {
+      "producto_id": "PRO02",
+      "nombre": "Servicio de respaldo",
+      "familia": "Continuidad",
+      "tipo": "Recurrente",
+      "p_recompra_60d": 0.0963,
+      "clientes_con_compra": 75,
+      "clientes_en_ventana": 24,
+      "clientes_frios": 46,
+      "ingreso_90d_cop": 20807500.0
+    }
+  ]
+}

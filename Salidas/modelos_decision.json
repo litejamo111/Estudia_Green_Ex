@@ -1,0 +1,137 @@
+{
+  "corte_actual": "2026-10-31",
+  "horizonte_dias": 60,
+  "desercion": {
+    "modelo": "Regresión logística didáctica; etiqueta = sin compra en los próximos 60 días",
+    "variables": [
+      "recencia_dias",
+      "compras_30d",
+      "compras_90d",
+      "compras_total"
+    ],
+    "media_entrenamiento": [
+      126.563676,
+      0.683068,
+      1.881331,
+      4.354559
+    ],
+    "desviacion_entrenamiento": [
+      234.52698,
+      0.838295,
+      1.594704,
+      3.557901
+    ],
+    "pesos": [
+      -1.016103,
+      0.038705,
+      -0.038637,
+      -0.288464,
+      0.158962
+    ],
+    "umbral_riesgo": 0.35,
+    "criterio_umbral": "exactitud balanceada en validación",
+    "entrenamiento": {
+      "desde": "2025-03-31",
+      "hasta": "2026-04-30",
+      "filas": 1382
+    },
+    "validacion": {
+      "n": 240,
+      "TP": 34,
+      "TN": 116,
+      "FP": 22,
+      "FN": 68,
+      "precision": 0.6071,
+      "recall": 0.3333,
+      "F1": 0.4304,
+      "exactitud_balanceada": 0.587
+    },
+    "prueba": {
+      "n": 240,
+      "TP": 53,
+      "TN": 100,
+      "FP": 31,
+      "FN": 56,
+      "precision": 0.631,
+      "recall": 0.4862,
+      "F1": 0.5492,
+      "exactitud_balanceada": 0.6248
+    },
+    "regla_base_ciclo_propio": {
+      "n": 240,
+      "TP": 66,
+      "TN": 91,
+      "FP": 40,
+      "FN": 43,
+      "precision": 0.6226,
+      "recall": 0.6055,
+      "F1": 0.614,
+      "exactitud_balanceada": 0.6501
+    },
+    "auc_prueba": 0.6744,
+    "top_20_prueba": {
+      "aciertos_modelo": 18,
+      "aciertos_regla": 11,
+      "tasa_base": 0.4542
+    },
+    "lectura": "La regla del ciclo propio clasifica mejor umbral a umbral; el modelo ordena mejor la cola de riesgo y se usa para priorizar contactos.",
+    "advertencia": "Datos de prueba. El mismo cliente reaparece en varios cortes: mide seguimiento temporal, no generalización a clientes nuevos."
+  },
+  "recompra": {
+    "metodo": "tasa base calibrada por producto en ventanas de 60 días",
+    "motivo": "El histórico no muestra señal temporal por producto; se reporta la frecuencia observada y la ventana del ciclo.",
+    "horizonte_dias": 60
+  },
+  "tasas_producto": {
+    "PRO01": {
+      "p_recompra_60d": 0.1744,
+      "ventanas_observadas": 428,
+      "recompras_observadas": 74
+    },
+    "PRO02": {
+      "p_recompra_60d": 0.0963,
+      "ventanas_observadas": 372,
+      "recompras_observadas": 35
+    },
+    "PRO03": {
+      "p_recompra_60d": 0.1551,
+      "ventanas_observadas": 372,
+      "recompras_observadas": 57
+    },
+    "PRO04": {
+      "p_recompra_60d": 0.1723,
+      "ventanas_observadas": 497,
+      "recompras_observadas": 85
+    },
+    "PRO05": {
+      "p_recompra_60d": 0.1681,
+      "ventanas_observadas": 450,
+      "recompras_observadas": 75
+    },
+    "PRO06": {
+      "p_recompra_60d": 0.1456,
+      "ventanas_observadas": 369,
+      "recompras_observadas": 53
+    },
+    "PRO07": {
+      "p_recompra_60d": 0.1286,
+      "ventanas_observadas": 379,
+      "recompras_observadas": 48
+    },
+    "PRO08": {
+      "p_recompra_60d": 0.1444,
+      "ventanas_observadas": 476,
+      "recompras_observadas": 68
+    },
+    "PRO09": {
+      "p_recompra_60d": 0.1461,
+      "ventanas_observadas": 525,
+      "recompras_observadas": 76
+    },
+    "PRO10": {
+      "p_recompra_60d": 0.1288,
+      "ventanas_observadas": 495,
+      "recompras_observadas": 63
+    }
+  }
+}

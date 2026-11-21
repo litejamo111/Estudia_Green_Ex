@@ -1,0 +1,42 @@
+"""Automatización de ingesta del MVP.
+
+Ejecuta el pipeline de datos y el motor de decisiones en orden. Pensado para
+cron, un POST /ingesta o ejecución manual:
+
+    python 06_Mvp/ingesta.py
+
+Los CSV de 01_Datos se reemplazan sin cambiar el esquema y el corte se toma de
+02_Documentacion/parametros_prueba.json.
+"""
+from pathlib import Path
+import json
+import subprocess
+import sys
+import time
+
+RAIZ = Path(__file__).resolve().parents[1]
+SALIDAS = RAIZ / "Salidas"
+
+
+def ejecutar():
+    inicio = time.time()
+    for script in ("pipeline_datos.py", "motor_decisiones.py"):
+        proceso = subprocess.run(
+            [sys.executable, str(RAIZ / "06_Mvp" / script)],
+            capture_output=True,
+            text=True,
+        )
+        if proceso.returncode != 0:
+            raise RuntimeError(f"{script} falló: {proceso.stderr[-800:]}")
+    dashboard = json.loads((SALIDAS / "dashboard.json").read_text(encoding="utf-8"))
+    return {
+        "estado": "ok",
+        "corte": dashboard["corte"],
+        "clientes": dashboard["kpis"]["clientes"],
+        "frios": dashboard["kpis"]["frios"],
+        "duracion_s": round(time.time() - inicio, 2),
+    }
+
+
+if __name__ == "__main__":
+    print(json.dumps(ejecutar(), ensure_ascii=False))
