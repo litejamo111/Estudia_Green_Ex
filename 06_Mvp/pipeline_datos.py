@@ -1,4 +1,4 @@
-"""MVP v0.1 - Limpieza y unificación de las tablas de prueba de Green Services.
+"""Predicta - Limpieza y unificación de las tablas de prueba de Green Services.
 
 Lee los CSV de 01_Datos, valida claves y tipos, convierte USD a COP con la TRM
 de la fecha de cada venta y escribe una única tabla a nivel de venta lista para

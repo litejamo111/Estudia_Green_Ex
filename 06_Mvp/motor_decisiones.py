@@ -1,4 +1,4 @@
-"""Motor de decisiones del MVP v0.1.
+"""Predicta - Motor de decisiones del MVP.
 
 Produce, al corte vigente, cuatro artefactos para el dashboard:
   - riesgo de deserción a 60 días por cliente (regresión logística)
@@ -255,6 +255,7 @@ def main():
     top_regla = sum(f["etiqueta"] for f in sorted(prueba, key=regla, reverse=True)[:20])
 
     resultados_modelo = {
+        "producto": "Predicta",
         "corte_actual": str(corte_actual),
         "horizonte_dias": HORIZONTE_DIAS,
         "desercion": {
@@ -400,6 +401,7 @@ def main():
     resumen_productos.sort(key=lambda x: -x["ingreso_90d_cop"])
 
     dashboard = {
+        "producto": "Predicta",
         "corte": str(corte_actual),
         "horizonte_dias": HORIZONTE_DIAS,
         "kpis": {

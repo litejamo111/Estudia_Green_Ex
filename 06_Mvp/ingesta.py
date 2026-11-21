@@ -1,4 +1,4 @@
-"""Automatización de ingesta del MVP.
+"""Predicta - Automatización de ingesta del MVP.
 
 Ejecuta el pipeline de datos y el motor de decisiones en orden. Pensado para
 cron, un POST /ingesta o ejecución manual:
@@ -30,6 +30,7 @@ def ejecutar():
             raise RuntimeError(f"{script} falló: {proceso.stderr[-800:]}")
     dashboard = json.loads((SALIDAS / "dashboard.json").read_text(encoding="utf-8"))
     return {
+        "producto": "Predicta",
         "estado": "ok",
         "corte": dashboard["corte"],
         "clientes": dashboard["kpis"]["clientes"],

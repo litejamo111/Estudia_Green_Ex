@@ -1,4 +1,4 @@
-"""API del MVP v0.1 - dashboard accionable sobre los artefactos del motor.
+"""Predicta - API del dashboard accionable sobre los artefactos del motor.
 
 Uso:
     python3.11 06_Mvp/api.py
@@ -22,7 +22,7 @@ from fastapi.middleware.cors import CORSMiddleware
 RAIZ = Path(__file__).resolve().parents[1]
 SALIDAS = RAIZ / "Salidas"
 
-app = FastAPI(title="Green Services MVP", version="0.1.0")
+app = FastAPI(title="Predicta API", version="0.1.0", description="Deserción y recompra por producto")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -48,7 +48,8 @@ def datos(nombre):
 @app.get("/")
 def inicio():
     return {
-        "servicio": "Green Services MVP",
+        "producto": "Predicta",
+        "servicio": "Predicta API",
         "corte": datos("dashboard.json")["corte"],
         "rutas": ["/salud", "/dashboard", "/clientes", "/clientes/{id}", "/productos", "/metricas", "/ingesta"],
     }
@@ -59,8 +60,8 @@ def salud():
     try:
         dashboard = datos("dashboard.json")
     except HTTPException:
-        return {"estado": "sin_datos", "corte": None}
-    return {"estado": "ok", "corte": dashboard["corte"]}
+        return {"producto": "Predicta", "estado": "sin_datos", "corte": None}
+    return {"producto": "Predicta", "estado": "ok", "corte": dashboard["corte"]}
 
 
 @app.get("/dashboard")

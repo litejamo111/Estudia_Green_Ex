@@ -1,4 +1,5 @@
 {
+  "producto": "Predicta",
   "corte": "2026-10-31",
   "horizonte_dias": 60,
   "kpis": {

@@ -1,4 +1,4 @@
-# API del MVP. Instalar solo para el backend; el pipeline y el motor no requieren dependencias.
+# Predicta API. Instalar solo para el backend; el pipeline y el motor no requieren dependencias.
 fastapi>=0.95,<0.100
 pydantic<2
 uvicorn>=0.24
