@@ -1,0 +1,2 @@
+# Archivo opcional de calidad
+ventas_con_incidencias_OPCIONAL.csv contiene 80 filas base y una copia adicional de la primera fila. No se debe sumar a ventas.csv. Incidencias sembradas: un venta_id duplicado, cliente CLI999 inexistente, fecha 2026-02-30 inválida, moneda EUR no cubierta por las tasas, cantidad -2, precio vacío y producto PRO99 inexistente. Documenten por fila si corrigen, aíslan o solicitan información; no inventen valores faltantes.

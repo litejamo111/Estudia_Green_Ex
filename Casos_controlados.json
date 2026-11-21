@@ -1,0 +1,55 @@
+[
+  {
+    "caso": "COP",
+    "entrada": {
+      "cantidad": 2,
+      "precio_unitario": 100000,
+      "descuento_pct": 10,
+      "moneda": "COP"
+    },
+    "esperado_cop": 180000
+  },
+  {
+    "caso": "USD",
+    "entrada": {
+      "cantidad": 3,
+      "precio_unitario": 100,
+      "descuento_pct": 0,
+      "moneda": "USD",
+      "cop_por_usd": 4000
+    },
+    "esperado_cop": 1200000
+  },
+  {
+    "caso": "Anulada",
+    "entrada": {
+      "estado": "Anulada"
+    },
+    "esperado": "No sumar al ingreso ni a la frecuencia"
+  },
+  {
+    "caso": "Frío en frontera",
+    "entrada": {
+      "corte": "2026-10-31",
+      "ultima_compra": "2026-08-02"
+    },
+    "esperado_dias": 90,
+    "esperado_frio": true
+  },
+  {
+    "caso": "Renovación frontera",
+    "entrada": {
+      "corte": "2026-10-31",
+      "fecha_fin": "2026-12-15"
+    },
+    "esperado_dias": 45,
+    "esperado_proxima": true
+  },
+  {
+    "caso": "Sin datos",
+    "entrada": {
+      "cliente_id": "CLI999"
+    },
+    "esperado": "Cliente no encontrado; no inventar historial"
+  }
+]
