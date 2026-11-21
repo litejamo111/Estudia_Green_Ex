@@ -1,0 +1,8 @@
+{
+  "fecha_corte": "2026-10-31",
+  "frecuente_min_transacciones": 8,
+  "frio_dias_sin_compra": 90,
+  "renovacion_dias": 45,
+  "horizonte_prediccion_dias": 30,
+  "nota": "Supuestos didácticos editables. No son políticas de Green Services."
+}

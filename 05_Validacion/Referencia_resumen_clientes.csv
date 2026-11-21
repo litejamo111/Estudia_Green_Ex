@@ -1,0 +1,121 @@
+﻿cliente_id,fecha_corte,transacciones_confirmadas,ingreso_cop,ultima_compra,dias_sin_compra,frecuente,frio,sin_compras,renovaciones_proximas,coberturas_vencidas,productos_historicos,prioridad_regla,naturaleza
+CLI001,2026-10-31,15,52422666.6,2026-04-02,212,True,True,False,0,3,PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI002,2026-10-31,18,84057985.87,2026-10-22,9,True,False,False,0,3,PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI003,2026-10-31,14,68803398.75,2026-10-24,7,True,False,False,1,0,PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI004,2026-10-31,16,78799335.58,2026-09-28,33,True,False,False,0,2,PRO01|PRO02|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI005,2026-10-31,7,46454225.7,2026-05-04,180,False,True,False,0,1,PRO04|PRO07|PRO08|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI006,2026-10-31,6,24102721.06,2026-03-29,216,False,True,False,0,3,PRO02|PRO03|PRO04|PRO06|PRO08|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI007,2026-10-31,13,68477538.86,2026-10-19,12,True,False,False,0,2,PRO03|PRO05|PRO06|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI008,2026-10-31,12,60436143.76,2026-09-03,58,True,False,False,2,1,PRO01|PRO02|PRO03|PRO04|PRO05|PRO07|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI009,2026-10-31,6,14153189.22,2026-06-18,135,False,True,False,0,2,PRO01|PRO06|PRO07|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI010,2026-10-31,17,61318939.2,2026-10-20,11,True,False,False,0,0,PRO01|PRO02|PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI011,2026-10-31,15,49294510.92,2026-03-30,215,True,True,False,0,1,PRO01|PRO02|PRO03|PRO05|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI012,2026-10-31,12,54711898.6,2026-10-12,19,True,False,False,0,2,PRO02|PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI013,2026-10-31,8,18461893.88,2026-06-29,124,True,True,False,0,0,PRO01|PRO02|PRO05|PRO06|PRO07|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI014,2026-10-31,10,32720657.58,2026-10-24,7,True,False,False,0,0,PRO01|PRO02|PRO03|PRO04|PRO05|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI015,2026-10-31,10,47229911.19,2026-09-27,34,True,False,False,0,2,PRO03|PRO04|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI016,2026-10-31,17,51623288.38,2026-03-26,219,True,True,False,1,1,PRO01|PRO02|PRO03|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI017,2026-10-31,15,81265509.73,2026-10-29,2,True,False,False,0,1,PRO01|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI018,2026-10-31,18,64493367.02,2026-10-03,28,True,False,False,0,0,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI019,2026-10-31,10,30248128.22,2026-10-13,18,True,False,False,0,1,PRO01|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI020,2026-10-31,13,48567429.98,2026-10-10,21,True,False,False,0,0,PRO02|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI021,2026-10-31,5,13454591.6,2026-02-22,251,False,True,False,0,1,PRO01|PRO05|PRO08|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI022,2026-10-31,17,35249291.78,2026-09-30,31,True,False,False,0,1,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI023,2026-10-31,18,140508482.29,2026-09-30,31,True,False,False,0,1,PRO01|PRO02|PRO04|PRO05|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI024,2026-10-31,5,21680548.44,2026-09-15,46,False,False,False,0,2,PRO01|PRO05|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI025,2026-10-31,9,25801306.73,2026-10-30,1,True,False,False,1,1,PRO01|PRO02|PRO06|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI026,2026-10-31,7,22631247.4,2026-04-26,188,False,True,False,1,1,PRO03|PRO04|PRO06|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI027,2026-10-31,9,40874500.0,2026-09-04,57,True,False,False,0,1,PRO03|PRO04|PRO05|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI028,2026-10-31,13,37635183.29,2026-10-09,22,True,False,False,0,3,PRO01|PRO02|PRO03|PRO06|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI029,2026-10-31,15,74610403.85,2026-10-06,25,True,False,False,1,0,PRO01|PRO02|PRO04|PRO05|PRO06|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI030,2026-10-31,16,49133260.43,2026-10-24,7,True,False,False,1,1,PRO01|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI031,2026-10-31,11,47771000.0,2026-04-30,184,True,True,False,1,2,PRO02|PRO03|PRO05|PRO07|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI032,2026-10-31,16,70127665.46,2026-08-28,64,True,False,False,1,1,PRO01|PRO02|PRO03|PRO04|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI033,2026-10-31,13,67714971.56,2026-09-11,50,True,False,False,0,0,PRO01|PRO02|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI034,2026-10-31,4,15045555.84,2026-09-27,34,False,False,False,0,1,PRO05|PRO06|PRO07,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI035,2026-10-31,10,29247408.92,2026-08-21,71,True,False,False,0,0,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI036,2026-10-31,5,20503719.3,2026-04-27,187,False,True,False,0,1,PRO01|PRO03|PRO04|PRO06|PRO07,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI037,2026-10-31,15,41736324.28,2026-09-26,35,True,False,False,0,2,PRO01|PRO02|PRO03|PRO05|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI038,2026-10-31,11,27580398.88,2026-09-14,47,True,False,False,0,2,PRO01|PRO03|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI039,2026-10-31,7,27720764.88,2026-08-26,66,False,False,False,1,0,PRO01|PRO02|PRO03|PRO05|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI040,2026-10-31,10,19112166.06,2026-09-13,48,True,False,False,0,0,PRO02|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI041,2026-10-31,15,130935750.01,2026-04-23,191,True,True,False,0,2,PRO03|PRO04|PRO05|PRO06|PRO07|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI042,2026-10-31,14,46272559.1,2026-09-27,34,True,False,False,1,2,PRO01|PRO02|PRO03|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI043,2026-10-31,13,88916660.79,2026-05-10,174,True,True,False,0,1,PRO02|PRO03|PRO04|PRO06|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI044,2026-10-31,12,36762455.85,2026-09-03,58,True,False,False,1,1,PRO01|PRO02|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI045,2026-10-31,17,85180565.14,2026-10-06,25,True,False,False,1,0,PRO01|PRO02|PRO03|PRO04|PRO05|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI046,2026-10-31,4,19970000.0,2026-02-17,256,False,True,False,0,1,PRO04|PRO05|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI047,2026-10-31,6,29688329.0,2026-06-25,128,False,True,False,1,0,PRO01|PRO03|PRO04,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI048,2026-10-31,6,31019592.78,2026-06-23,130,False,True,False,0,1,PRO01|PRO02|PRO04|PRO07|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI049,2026-10-31,7,24375796.9,2026-09-16,45,False,False,False,1,1,PRO01|PRO02|PRO04|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI050,2026-10-31,15,60027239.76,2026-08-10,82,True,False,False,0,0,PRO01|PRO02|PRO04|PRO05|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI051,2026-10-31,10,48508746.84,2026-04-18,196,True,True,False,0,2,PRO01|PRO03|PRO05|PRO06|PRO07|PRO08|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI052,2026-10-31,7,31870356.99,2026-06-26,127,False,True,False,0,1,PRO01|PRO03|PRO05|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI053,2026-10-31,10,31809990.95,2026-08-27,65,True,False,False,0,2,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI054,2026-10-31,5,37533542.54,2026-06-01,152,False,True,False,0,1,PRO01|PRO02|PRO04|PRO05,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI055,2026-10-31,13,60941085.28,2026-10-26,5,True,False,False,0,2,PRO01|PRO04|PRO05|PRO06|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI056,2026-10-31,9,32018249.4,2026-04-05,209,True,True,False,0,2,PRO04|PRO05|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI057,2026-10-31,8,25009857.44,2026-10-03,28,True,False,False,0,2,PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI058,2026-10-31,13,35660544.26,2026-10-25,6,True,False,False,0,1,PRO02|PRO05|PRO06|PRO07|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI059,2026-10-31,8,39253406.7,2026-08-18,74,True,False,False,0,1,PRO04|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI060,2026-10-31,15,45198991.27,2026-10-14,17,True,False,False,0,3,PRO01|PRO03|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI061,2026-10-31,16,47078785.3,2026-04-30,184,True,True,False,0,2,PRO02|PRO04|PRO05|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI062,2026-10-31,15,83949986.88,2026-10-12,19,True,False,False,0,2,PRO01|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI063,2026-10-31,17,60368951.79,2026-09-15,46,True,False,False,0,1,PRO01|PRO02|PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI064,2026-10-31,5,30760529.16,2026-10-25,6,False,False,False,0,0,PRO01|PRO04|PRO06|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI065,2026-10-31,15,56299103.23,2026-10-26,5,True,False,False,1,0,PRO02|PRO03|PRO04|PRO05|PRO06|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI066,2026-10-31,11,36619154.06,2026-03-21,224,True,True,False,0,1,PRO02|PRO03|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI067,2026-10-31,6,28509660.8,2026-10-04,27,False,False,False,0,1,PRO01|PRO02|PRO04|PRO06|PRO07,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI068,2026-10-31,5,20922000.0,2026-09-09,52,False,False,False,0,2,PRO03|PRO04|PRO07|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI069,2026-10-31,15,52582325.95,2026-08-18,74,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI070,2026-10-31,11,68524954.86,2026-10-28,3,True,False,False,0,3,PRO01|PRO02|PRO03|PRO04|PRO05|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI071,2026-10-31,6,31230993.04,2026-04-07,207,False,True,False,0,1,PRO01|PRO05|PRO07|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI072,2026-10-31,9,25298853.1,2026-09-18,43,True,False,False,1,0,PRO02|PRO03|PRO04|PRO07|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI073,2026-10-31,10,61219110.98,2026-07-16,107,True,True,False,0,2,PRO01|PRO04|PRO05|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI074,2026-10-31,12,49937622.25,2026-10-29,2,True,False,False,0,2,PRO01|PRO03|PRO04|PRO06|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI075,2026-10-31,18,60717732.48,2026-09-19,42,True,False,False,0,2,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI076,2026-10-31,16,52505654.84,2026-04-20,194,True,True,False,0,3,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI077,2026-10-31,13,35687043.99,2026-09-10,51,True,False,False,0,1,PRO02|PRO03|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI078,2026-10-31,18,69657947.18,2026-10-28,3,True,False,False,0,1,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI079,2026-10-31,18,81076896.11,2026-10-08,23,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI080,2026-10-31,17,114744299.4,2026-08-24,68,True,False,False,0,2,PRO01|PRO04|PRO05|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI081,2026-10-31,14,40752803.0,2026-02-12,261,True,True,False,0,1,PRO01|PRO02|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI082,2026-10-31,8,30831078.38,2026-08-22,70,True,False,False,0,1,PRO03|PRO04|PRO06|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI083,2026-10-31,15,50649894.14,2026-09-08,53,True,False,False,0,0,PRO01|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI084,2026-10-31,5,56615000.0,2026-08-22,70,False,False,False,0,1,PRO02|PRO04|PRO05|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI085,2026-10-31,12,54464968.26,2026-10-30,1,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI086,2026-10-31,4,23128000.0,2026-04-19,195,False,True,False,1,1,PRO03|PRO04|PRO07,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI087,2026-10-31,14,37448431.43,2026-10-08,23,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO06|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI088,2026-10-31,13,32765149.28,2026-09-30,31,True,False,False,0,1,PRO01|PRO02|PRO05|PRO06|PRO07|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI089,2026-10-31,17,103454501.97,2026-08-15,77,True,False,False,0,0,PRO01|PRO03|PRO04|PRO06|PRO07|PRO08|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI090,2026-10-31,8,17210734.71,2026-10-12,19,True,False,False,0,0,PRO01|PRO02|PRO03|PRO04|PRO08,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI091,2026-10-31,6,28442019.36,2025-12-29,306,False,True,False,0,1,PRO01|PRO02|PRO04|PRO06|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI092,2026-10-31,4,24174543.2,2026-03-15,230,False,True,False,0,0,PRO04|PRO06|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI093,2026-10-31,4,22407000.0,2026-08-05,87,False,False,False,1,1,PRO02|PRO03|PRO04|PRO07,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI094,2026-10-31,7,24505373.35,2026-07-26,97,False,True,False,0,1,PRO03|PRO07|PRO08|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI095,2026-10-31,16,66278830.68,2026-09-20,41,True,False,False,0,2,PRO01|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI096,2026-10-31,14,39615721.12,2026-04-28,186,True,True,False,1,1,PRO01|PRO02|PRO03|PRO04|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI097,2026-10-31,17,84240627.0,2026-10-19,12,True,False,False,0,1,PRO02|PRO03|PRO04|PRO05|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI098,2026-10-31,18,79212081.87,2026-09-04,57,True,False,False,1,0,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO08,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI099,2026-10-31,12,43370341.72,2026-09-28,33,True,False,False,0,3,PRO03|PRO04|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI100,2026-10-31,14,57672380.55,2026-10-24,7,True,False,False,0,1,PRO01|PRO02|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI101,2026-10-31,4,10643375.08,2026-04-30,184,False,True,False,0,1,PRO01|PRO03|PRO04|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI102,2026-10-31,16,34988334.14,2026-10-21,10,True,False,False,0,1,PRO02|PRO03|PRO05|PRO06|PRO08|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI103,2026-10-31,7,21285433.39,2026-07-29,94,False,True,False,0,1,PRO01|PRO03|PRO04|PRO06|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI104,2026-10-31,8,30161067.14,2026-08-04,88,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI105,2026-10-31,14,55007109.28,2026-10-08,23,True,False,False,0,0,PRO01|PRO02|PRO04|PRO05|PRO06|PRO07|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI106,2026-10-31,15,82535259.6,2026-04-04,210,True,True,False,1,0,PRO02|PRO03|PRO04|PRO05|PRO07|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI107,2026-10-31,6,20625878.43,2026-05-24,160,False,True,False,0,3,PRO01|PRO05|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI108,2026-10-31,12,41471377.8,2026-10-12,19,True,False,False,0,0,PRO01|PRO03|PRO05|PRO06|PRO07|PRO09|PRO10,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI109,2026-10-31,14,53673235.64,2026-10-11,20,True,False,False,0,1,PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI110,2026-10-31,11,43029664.37,2026-10-19,12,True,False,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO06|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI111,2026-10-31,10,43091277.92,2026-03-10,235,True,True,False,0,2,PRO01|PRO04|PRO05|PRO07|PRO08|PRO09,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI112,2026-10-31,14,55577688.35,2026-07-18,105,True,True,False,0,1,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI113,2026-10-31,14,47074719.88,2026-07-05,118,True,True,False,0,1,PRO01|PRO02|PRO04|PRO05|PRO06|PRO07|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI114,2026-10-31,18,95824760.21,2026-10-13,18,True,False,False,1,0,PRO01|PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO09|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI115,2026-10-31,12,35361207.32,2026-08-19,73,True,False,False,1,0,PRO01|PRO02|PRO03|PRO05|PRO06|PRO07|PRO08|PRO10,Revisar cobertura,Resultado de prueba; no es una predicción
+CLI116,2026-10-31,8,20824719.43,2026-01-28,276,True,True,False,0,2,PRO01|PRO02|PRO03|PRO04|PRO07|PRO08,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI117,2026-10-31,7,16804676.16,2026-05-07,177,False,True,False,0,1,PRO01|PRO02|PRO03|PRO05|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI118,2026-10-31,13,72377359.75,2026-06-13,140,True,True,False,0,1,PRO01|PRO02|PRO04|PRO05|PRO08|PRO10,Revisar cliente frío,Resultado de prueba; no es una predicción
+CLI119,2026-10-31,6,7354449.2,2026-08-12,80,False,False,False,0,0,PRO03|PRO07|PRO08|PRO09,Seguimiento habitual,Resultado de prueba; no es una predicción
+CLI120,2026-10-31,12,68071525.76,2026-09-29,32,True,False,False,1,1,PRO02|PRO03|PRO04|PRO05|PRO06|PRO07|PRO08|PRO09,Revisar cobertura,Resultado de prueba; no es una predicción
