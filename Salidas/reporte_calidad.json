@@ -1,0 +1,24 @@
+{
+  "filas_por_tabla": {
+    "clientes": 120,
+    "productos": 10,
+    "proveedores": 8,
+    "ventas": 1407,
+    "compras": 240,
+    "base_instalada": 243,
+    "trm_prueba": 669
+  },
+  "ventas_confirmadas": 1371,
+  "ventas_anuladas": 36,
+  "ventas_en_cop": 970,
+  "ventas_en_usd": 437,
+  "ingreso_confirmado_cop": 5647449456.36,
+  "rango_fechas_ventas": [
+    "2025-01-06",
+    "2026-10-30"
+  ],
+  "filas_unificadas": 1407,
+  "filas_descartadas": [],
+  "errores_estructurales": [],
+  "nota": "Datos y resultados de prueba; no son cifras reales de Green Services."
+}
