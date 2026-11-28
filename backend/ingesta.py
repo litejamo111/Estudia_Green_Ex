@@ -20,7 +20,8 @@ SALIDAS = RAIZ / "data" / "salidas"
 
 def ejecutar():
     inicio = time.time()
-    for script in ("pipeline_datos.py", "motor_decisiones.py"):
+    # Las pruebas de aceptación son parte del pipeline: todo artefacto incluye su evidencia.
+    for script in ("pipeline_datos.py", "motor_decisiones.py", "pruebas.py"):
         proceso = subprocess.run(
             [sys.executable, str(RAIZ / "backend" / script)],
             capture_output=True,
@@ -29,12 +30,14 @@ def ejecutar():
         if proceso.returncode != 0:
             raise RuntimeError(f"{script} falló: {proceso.stderr[-800:]}")
     dashboard = json.loads((SALIDAS / "dashboard.json").read_text(encoding="utf-8"))
+    pruebas = json.loads((SALIDAS / "pruebas.json").read_text(encoding="utf-8"))
     return {
         "producto": "Predicta",
         "estado": "ok",
         "corte": dashboard["corte"],
         "clientes": dashboard["kpis"]["clientes"],
         "frios": dashboard["kpis"]["frios"],
+        "pruebas": f"{pruebas['ok']}/{pruebas['total']}",
         "duracion_s": round(time.time() - inicio, 2),
     }
 
