@@ -20,6 +20,15 @@
     --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
   }
   *{box-sizing:border-box}
+  :root{color-scheme:dark}
+  *{scrollbar-width:thin;scrollbar-color:#2b3742 transparent}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#0b0f13}
+  ::-webkit-scrollbar-thumb{background:#2b3742;border-radius:99px;border:2px solid #0b0f13}
+  ::-webkit-scrollbar-thumb:hover{background:#3c4c5b}
+  ::-webkit-scrollbar-corner{background:#0b0f13}
+  ::selection{background:rgba(61,220,132,.28)}
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px;border-radius:6px}
   body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#14251c 0%,var(--bg) 55%) no-repeat,var(--bg);
        color:var(--txt);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
   a{color:var(--green)}
@@ -58,6 +67,8 @@
   input,select{background:var(--panel2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:9px 12px;font:14px inherit}
   input{min-width:220px;flex:1}
   .scroll{max-height:420px;overflow:auto}
+  .scroll thead th{position:sticky;top:0;background:#0f1419;z-index:1;box-shadow:inset 0 -1px 0 var(--line)}
+  @media(max-width:640px){.scroll{overflow-x:auto}table{min-width:520px}}
   .detail{font-family:var(--mono);font-size:12.5px;color:var(--dim);white-space:pre-wrap;margin:0}
   .acciones{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
   .accion{background:linear-gradient(180deg,#12181d,#0e1317);border:1px solid var(--line);border-left:3px solid var(--violet);
@@ -72,6 +83,24 @@
   .accion button{align-self:flex-start;background:#1b2430;color:var(--txt);border:1px solid #2c3947;border-radius:9px;
                  padding:7px 11px;font:12.5px inherit;cursor:pointer}
   .accion button:hover{border-color:var(--green);color:var(--green)}
+  .ficha-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:14px}
+  .ficha-head h3{margin:2px 0 0;font-size:19px}
+  .ficha-sub{font:12px/1.4 var(--mono);color:var(--dim)}
+  .ficha-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+  .stat{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:10px 12px}
+  .stat b{display:block;font:600 22px/1.2 system-ui}
+  .stat span{font-size:11.5px;color:var(--dim)}
+  .medidor{height:7px;border-radius:99px;background:#1d242b;overflow:hidden;margin:2px 0 14px}
+  .medidor i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--amber),var(--red));transition:width .35s ease}
+  .datos{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;margin:0 0 14px}
+  .datos dt{font:11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+  .datos dd{margin:2px 0 0;font-size:13.5px}
+  .proximo{background:#121a15;border:1px solid #23392b;border-radius:11px;padding:12px 14px}
+  .proximo strong{display:block;font-size:14px;margin-bottom:3px}
+  .proximo p{margin:0;font-size:13px;color:#c7d2dc}
+  .vacio{color:var(--dim);font-size:13.5px}
+  .vars{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 12px}
+  .vars span{font:11.5px/1 var(--mono);color:#b9c6d2;background:#141b22;border:1px solid var(--line);border-radius:999px;padding:5px 9px}
   .accion.gestionado{opacity:.5;border-left-color:#3a4652}
   .accion.gestionado .hacer{text-decoration:line-through;color:var(--dim)}
   .mini{background:none;border:0;color:var(--dim);font:12px inherit;cursor:pointer;padding:0;text-decoration:underline}
@@ -122,9 +151,11 @@
       </table>
     </div>
     <div class="panel">
-      <h2 style="margin:0 0 10px">Modelo · compra a 30 días</h2>
+      <h2 style="margin:0 0 4px">Modelo en producción</h2>
+      <div class="ficha-sub" id="modeloNombre" style="margin-bottom:10px">—</div>
+      <div class="vars" id="modeloVars"></div>
       <div class="kv" id="modelo"></div>
-      <p class="detail" id="modeloNota" style="margin-top:12px"></p>
+      <p class="vacio" id="modeloNota" style="margin:12px 0 0;font-size:12.5px"></p>
     </div>
   </div>
 
@@ -150,8 +181,30 @@
 
   <div class="two" style="margin-top:12px">
     <div class="panel">
-      <h2 style="margin:0 0 10px">Ficha del cliente</h2>
-      <p class="detail" id="detail">Selecciona un cliente en la tabla.</p>
+      <div class="ficha-head">
+        <div>
+          <div class="ficha-sub" id="f-id">Selecciona un cliente</div>
+          <h3 id="f-nombre">Sin selección</h3>
+          <div class="ficha-sub" id="f-lugar"></div>
+        </div>
+        <span class="pill" id="f-prioridad" hidden></span>
+      </div>
+      <div id="f-cuerpo" hidden>
+        <div class="ficha-grid">
+          <div class="stat"><b id="f-riesgo">—</b><span>riesgo de deserción</span></div>
+          <div class="stat"><b id="f-dias">—</b><span>días sin comprar</span></div>
+          <div class="stat"><b id="f-compras">—</b><span>compras 90 días</span></div>
+        </div>
+        <div class="medidor"><i id="f-barra" style="width:0%"></i></div>
+        <dl class="datos">
+          <div><dt>Última compra</dt><dd id="f-ultima">—</dd></div>
+          <div><dt>Ciclo habitual (p50)</dt><dd id="f-ciclo">—</dd></div>
+          <div><dt>Ventana estimada</dt><dd id="f-ventana">—</dd></div>
+          <div><dt>Sector · Ciudad</dt><dd id="f-sector">—</dd></div>
+        </dl>
+        <div class="proximo"><strong id="f-accion">—</strong><p id="f-guion">—</p></div>
+      </div>
+      <p class="vacio" id="f-vacio">Elige una fila de la cartera para ver el detalle y la acción recomendada.</p>
     </div>
     <div class="panel">
       <h2 style="margin:0 0 10px">Calidad de datos</h2>
@@ -293,6 +346,9 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       <td>${pill(c.prioridad)}</td></tr>`).join('');
 
     const v = met.validacion, pm = met.prueba_modelo, lb = met.prueba_linea_base_compra_ultimos_30d;
+    const NOMBRES = {recencia_dias:'días sin comprar', compras_30d:'compras 30 d', compras_90d:'compras 90 d', compras_total:'compras históricas'};
+    $('modeloNombre').textContent = 'Regresión logística · 4 variables · entrenada en cada build';
+    $('modeloVars').innerHTML = (met.variables || M.variables).map(v => `<span>${NOMBRES[v] || v}</span>`).join('');
     $('modelo').innerHTML = [
       ['Modelo', 'regresión logística'],
       ['Ventana', met.ventana_objetivo_dias + ' días'],
@@ -332,15 +388,23 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
         $('body').querySelectorAll('tr').forEach(x => x.classList.remove('sel'));
         tr.classList.add('sel');
         const c = cli.find(x => x.cliente_id === tr.dataset.id);
-        $('detail').textContent = JSON.stringify({
-          cliente: c.cliente_id, nombre: c.nombre, sector: c.sector, ciudad: c.ciudad,
-          estado: c.estado, prioridad: c.prioridad, riesgo_desercion: c.riesgo_desercion,
-          ultima_compra: c.ultima_compra, dias_sin_compra: c.dias_sin_compra,
-          compras_90d: c.compras_90d, ingreso_90d_cop: c.ingreso_90d_cop,
-          ciclo_p25: c.ciclo_p25, ciclo_p50: c.ciclo_p50, ciclo_p75: c.ciclo_p75,
-          ventana_desde: c.ventana_desde, ventana_hasta: c.ventana_hasta,
-          riesgo_si_compra_hoy: +riesgoCon(c,{rec:0,c30:1,c90:1,ct:1}).toFixed(4)
-        }, null, 2);
+        const a = ACCION[c.estado] || ACCION.sin_historial;
+        const p = (c.prioridad || 'baja');
+        $('f-vacio').hidden = true; $('f-cuerpo').hidden = false;
+        $('f-id').textContent = c.cliente_id;
+        $('f-nombre').textContent = c.nombre;
+        $('f-lugar').textContent = c.sector + ' · ' + c.ciudad;
+        $('f-prioridad').hidden = false; $('f-prioridad').className = 'pill ' + p; $('f-prioridad').textContent = p;
+        $('f-riesgo').textContent = pct1(c.riesgo_desercion);
+        $('f-dias').textContent = c.dias_sin_compra ?? '—';
+        $('f-compras').textContent = c.compras_90d;
+        $('f-barra').style.width = Math.min(100, c.riesgo_desercion*100).toFixed(0) + '%';
+        $('f-ultima').textContent = c.ultima_compra || '—';
+        $('f-ciclo').textContent = c.ciclo_p50 ? Math.round(c.ciclo_p50) + ' días' : '—';
+        $('f-ventana').textContent = c.ventana_desde ? c.ventana_desde + ' → ' + c.ventana_hasta : '—';
+        $('f-sector').textContent = c.sector + ' · ' + c.ciudad;
+        $('f-accion').textContent = a.t;
+        $('f-guion').textContent = a.h;
       });
     };
     $('q').oninput = render; $('filtro').onchange = render; render();
