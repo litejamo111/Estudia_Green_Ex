@@ -17,9 +17,10 @@ fi
 [[ -d $DIR/.git ]] || git clone --depth 1 "$REPO" "$DIR"
 cd "$DIR"
 
-python3 backend/predicta.py ingesta
-bash deploy/build.sh
 docker compose -f deploy/gcp/docker-compose.yml up -d --build
+docker compose -f deploy/gcp/docker-compose.yml run --rm -T api python backend/predicta.py ingesta
+bash deploy/build.sh
+docker compose -f deploy/gcp/docker-compose.yml up -d --force-recreate
 
 echo "== estado"
 docker compose -f deploy/gcp/docker-compose.yml ps

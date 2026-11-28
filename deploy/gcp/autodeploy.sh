@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
-# Aplica cada push a main en la VM, sin entrar por SSH.
-# Uso: sudo bash deploy/gcp/autodeploy.sh
+# Aplica cada push a main en la VM. Uso: sudo bash deploy/gcp/autodeploy.sh [--now]
+# El pipeline corre DENTRO del contenedor para que el modelo sea idéntico al del CI.
 set -euo pipefail
+
 cat >/etc/systemd/system/predicta-deploy.service <<'UNIT'
 [Unit]
 Description=Predicta autodeploy
 [Service]
 Type=oneshot
 WorkingDirectory=/opt/predicta
-ExecStartPre=/usr/bin/git pull --ff-only
-ExecStartPre=/usr/bin/python3 backend/predicta.py ingesta
-ExecStartPre=/bin/bash deploy/build.sh
-ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --build --force-recreate
+ExecStart=/usr/bin/git pull --ff-only
+ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml build
+ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml run --rm -T api python backend/predicta.py ingesta
+ExecStart=/bin/bash deploy/build.sh
+ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --force-recreate
 UNIT
 cat >/etc/systemd/system/predicta-deploy.timer <<'UNIT'
 [Unit]
@@ -24,4 +26,9 @@ WantedBy=timers.target
 UNIT
 systemctl daemon-reload
 systemctl enable --now predicta-deploy.timer
-echo "autodeploy activo: systemctl status predicta-deploy.timer"
+echo "autodeploy activo (cada 2 min)"
+
+if [[ "${1:-}" == "--now" ]]; then
+  systemctl start predicta-deploy.service
+  journalctl -u predicta-deploy.service -n 12 --no-pager || true
+fi
