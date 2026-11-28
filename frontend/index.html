@@ -96,9 +96,12 @@
   #zona-impresion{display:none}
   @media print{
     :root{color-scheme:light}
-    body{background:#fff!important;color:#111!important}
-    body > *:not(#zona-impresion){display:none!important}
-    #zona-impresion{display:block!important;font:12.5pt/1.45 system-ui;color:#111}
+    @page{margin:14mm}
+    html,body{background:#fff!important;color:#111!important;height:auto!important}
+    body *{visibility:hidden!important}
+    #zona-impresion,#zona-impresion *{visibility:visible!important}
+    #zona-impresion{display:block!important;position:absolute;left:0;top:0;width:100%;
+                    font:12pt/1.45 system-ui;color:#111;background:#fff}
     #zona-impresion h1{font-size:19pt;margin:0 0 2pt}
     #zona-impresion .meta{color:#555;font-size:9.5pt;margin-bottom:14pt}
     #zona-impresion .item{border:1px solid #ccc;border-left:3pt solid #111;border-radius:4pt;padding:9pt 11pt;margin:0 0 8pt;page-break-inside:avoid}
@@ -409,16 +412,41 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       descargar(`predicta-plan-${sello}.csv`, txt, 'text/csv;charset=utf-8');
     };
 
-    $('exp-xls').onclick = () => {
-      const filas = filasPlan();
-      const cols = [['n','#'],['id','Cliente'],['nombre','Nombre'],['ciudad','Ciudad'],['prioridad','Prioridad'],
-                    ['riesgo','Riesgo'],['dias','Días sin compra'],['ciclo','Ciclo habitual'],['accion','Acción'],['guion','Qué decir']];
-      const html = `<html><head><meta charset="utf-8"></head><body><table border="1">
-        <tr><th colspan="10" style="font-size:14pt">Predicta · Plan de hoy (corte ${dash.corte})</th></tr>
-        <tr>${cols.map(c => `<th>${c[1]}</th>`).join('')}</tr>
-        ${filas.map(f => `<tr>${cols.map(c => `<td>${String(f[c[0]]).replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}
-        </table><p>Datos de prueba. No son cifras reales de Green Services.</p></body></html>`;
-      descargar(`predicta-plan-${sello}.xls`, html, 'application/vnd.ms-excel');
+    const cargarSheetJS = () => new Promise((ok, fail) => {
+      if (window.XLSX) return ok(window.XLSX);
+      const s = document.createElement('script');
+      s.src = 'vendor/xlsx.full.min.js';
+      s.onload = () => ok(window.XLSX);
+      s.onerror = fail;
+      document.head.appendChild(s);
+    });
+
+    $('exp-xls').onclick = async () => {
+      const btn = $('exp-xls'); btn.disabled = true; btn.textContent = 'Generando…';
+      try{
+        const XLSX = await cargarSheetJS();
+        const filas = filasPlan();
+        const cab = ['#','Cliente','Nombre','Ciudad','Prioridad','Riesgo','Días sin compra','Ciclo habitual','Acción','Qué decir'];
+        const cuerpo = filas.map(f => [f.n, f.id, f.nombre, f.ciudad, f.prioridad, f.riesgo, f.dias, f.ciclo, f.accion, f.guion]);
+        const datos = [[`Predicta · Plan de hoy`],[`Corte ${dash.corte} · generado ${sello}`],[], cab, ...cuerpo, [],
+                       ['Datos de prueba. No son cifras reales de Green Services.']];
+        const ws = XLSX.utils.aoa_to_sheet(datos);
+        ws['!cols'] = [{wch:4},{wch:10},{wch:26},{wch:14},{wch:10},{wch:9},{wch:15},{wch:15},{wch:24},{wch:70}];
+        ws['!merges'] = [{s:{r:0,c:0},e:{r:0,c:9}},{s:{r:1,c:0},e:{r:1,c:9}}];
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Plan de hoy');
+        XLSX.writeFile(wb, `predicta-plan-${sello}.xlsx`, {compression:true});
+      }catch(e){
+        // respaldo sin librería: tabla HTML con extensión .xls
+        const filas = filasPlan();
+        const cols = [['n','#'],['id','Cliente'],['nombre','Nombre'],['ciudad','Ciudad'],['prioridad','Prioridad'],
+                      ['riesgo','Riesgo'],['dias','Días sin compra'],['ciclo','Ciclo habitual'],['accion','Acción'],['guion','Qué decir']];
+        const html = `<html><head><meta charset="utf-8"></head><body><table border="1">
+          <tr>${cols.map(c => `<th>${c[1]}</th>`).join('')}</tr>
+          ${filas.map(f => `<tr>${cols.map(c => `<td>${String(f[c[0]]).replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}
+          </table></body></html>`;
+        descargar(`predicta-plan-${sello}.xls`, html, 'application/vnd.ms-excel');
+      }finally{ btn.disabled = false; btn.textContent = 'Excel'; }
     };
 
     $('exp-pdf').onclick = () => {
