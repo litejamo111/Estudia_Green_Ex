@@ -12,6 +12,7 @@ WorkingDirectory=/opt/predicta
 ExecStart=/usr/bin/git pull --ff-only
 ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml build
 ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml run --rm -T api python backend/predicta.py ingesta
+ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml run --rm -T api python backend/pruebas.py
 ExecStart=/bin/bash deploy/build.sh
 ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --force-recreate
 UNIT
