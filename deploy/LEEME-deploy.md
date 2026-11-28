@@ -38,3 +38,9 @@ Pages para repos privados requiere GitHub Pro. Alternativa: Cloudflare Pages o V
 ## Cuando quieras API en vivo (después del 28)
 `backend/api.py` (FastAPI) corre en Fly.io/Render/VPS; el frontend solo cambia `fetch('data/x.json')`
 por `fetch(API_BASE + '/x')`. El motor no se toca.
+
+## Si el primer run falla en el paso deploy
+El entorno `github-pages` no existe hasta habilitar Pages:
+1. Settings → Pages → **Source: GitHub Actions**
+2. Actions → último run → **Re-run all jobs**
+3. `bash deploy/dns.sh` (o crear el CNAME a mano)
