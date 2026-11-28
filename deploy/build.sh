@@ -3,6 +3,10 @@
 # No borra el directorio _site: conserva el inodo para que el bind-mount de Caddy siga válido.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+if ! ls data/salidas/*.json >/dev/null 2>&1; then
+  echo "Faltan artefactos. Ejecuta antes: python backend/predicta.py ingesta" >&2
+  exit 1
+fi
 mkdir -p _site
 find _site -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 mkdir -p _site/data
