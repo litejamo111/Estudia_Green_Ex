@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Ensambla _site: frontend + salidas del motor. Uso: bash deploy/build.sh
+# No borra el directorio _site: conserva el inodo para que el bind-mount de Caddy siga válido.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-rm -rf _site
+mkdir -p _site
+find _site -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 mkdir -p _site/data
 cp -r frontend/. _site/
 touch _site/.nojekyll

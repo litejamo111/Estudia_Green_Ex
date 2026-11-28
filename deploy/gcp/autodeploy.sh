@@ -8,10 +8,10 @@ Description=Predicta autodeploy
 [Service]
 Type=oneshot
 WorkingDirectory=/opt/predicta
-ExecStart=/usr/bin/git pull --ff-only
+ExecStartPre=/usr/bin/git pull --ff-only
 ExecStartPre=/usr/bin/python3 backend/predicta.py ingesta
 ExecStartPre=/bin/bash deploy/build.sh
-ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --build
+ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --build --force-recreate
 UNIT
 cat >/etc/systemd/system/predicta-deploy.timer <<'UNIT'
 [Unit]
