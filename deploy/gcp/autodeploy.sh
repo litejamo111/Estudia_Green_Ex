@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Aplica cada push a main en la VM. Uso: sudo bash deploy/gcp/autodeploy.sh [--now]
-# El pipeline corre DENTRO del contenedor para que el modelo sea idéntico al del CI.
+# Instala el autodeploy. Uso: sudo bash deploy/gcp/autodeploy.sh [--now]
+# El unit solo sincroniza el repo y llama a apply.sh (que puede cambiar sin reinstalar).
 set -euo pipefail
 
 cat >/etc/systemd/system/predicta-deploy.service <<'UNIT'
@@ -9,11 +9,9 @@ Description=Predicta autodeploy
 [Service]
 Type=oneshot
 WorkingDirectory=/opt/predicta
-ExecStart=/usr/bin/git pull --ff-only
-ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml build
-ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml run --rm -T api python backend/predicta.py ingesta
-ExecStart=/bin/bash deploy/build.sh
-ExecStart=/usr/bin/docker compose -f deploy/gcp/docker-compose.yml up -d --force-recreate
+ExecStart=/usr/bin/git fetch --quiet origin main
+ExecStart=/usr/bin/git reset --hard origin/main
+ExecStart=/bin/bash /opt/predicta/deploy/gcp/apply.sh
 UNIT
 cat >/etc/systemd/system/predicta-deploy.timer <<'UNIT'
 [Unit]
@@ -26,9 +24,9 @@ WantedBy=timers.target
 UNIT
 systemctl daemon-reload
 systemctl enable --now predicta-deploy.timer
-echo "autodeploy activo (cada 2 min)"
+echo "autodeploy instalado (cada 2 min) · sincroniza con reset --hard origin/main"
 
 if [[ "${1:-}" == "--now" ]]; then
   systemctl start predicta-deploy.service
-  journalctl -u predicta-deploy.service -n 12 --no-pager || true
+  journalctl -u predicta-deploy.service -n 15 --no-pager || true
 fi
