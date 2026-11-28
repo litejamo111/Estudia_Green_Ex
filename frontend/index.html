@@ -469,13 +469,28 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
     };
 
     $('recalc').onclick = async () => {
-      $('recalc').textContent = 'Procesando…';
-      try{
-        const r = await fetch('api/ingesta', {method:'POST'});
-        const d = await r.json();
-        $('recalc').textContent = 'Listo en ' + Math.round(d.duracion_total_s * 10)/10 + ' s · recargando';
-        setTimeout(() => location.reload(), 700);
-      }catch(e){ $('recalc').textContent = 'Error al recalcular'; }
+      const btn = $('recalc'); const t0 = Date.now();
+      btn.disabled = true;
+      let antes = null;
+      try{ antes = (await (await fetch('api/ingesta/estado', {cache:'no-store'})).json()).momento || null; }catch(e){}
+      btn.textContent = 'Procesando… 0 s';
+      fetch('api/ingesta', {method:'POST'}).catch(() => {});
+      const reloj = setInterval(() => {
+        const s = Math.round((Date.now() - t0) / 1000);
+        btn.textContent = `Procesando… ${s} s`;
+        if (s > 300) { clearInterval(reloj); btn.textContent = 'Tardó demasiado · recarga'; btn.disabled = false; }
+      }, 1000);
+      const vigilar = setInterval(async () => {
+        try{
+          const d = await (await fetch('api/ingesta/estado', {cache:'no-store'})).json();
+          if (d.momento && d.momento !== antes){
+            clearInterval(reloj); clearInterval(vigilar);
+            const s = Math.round((Date.now() - t0) / 1000);
+            btn.textContent = `Listo en ${s} s · recargando`;
+            setTimeout(() => location.reload(), 700);
+          }
+        }catch(e){}
+      }, 2500);
     };
 
     $('top').innerHTML = dash.top_riesgo.map(c => `<tr>
