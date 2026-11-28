@@ -1,11 +1,11 @@
 """Predicta - API del dashboard accionable sobre los artefactos del motor.
 
 Uso:
-    python3.11 06_Mvp/api.py
-    python3.11 -m uvicorn --app-dir 06_Mvp api:app --host 127.0.0.1 --port 8000
+    python3.11 backend/api.py
+    python3.11 -m uvicorn --app-dir backend api:app --host 127.0.0.1 --port 8000
 
-No requiere base de datos: lee los JSON de Salidas y los recarga cuando cambian.
-La ingesta se dispara con POST /ingesta (o cron sobre 06_Mvp/ingesta.py).
+No requiere base de datos: lee los JSON de data/salidas y los recarga cuando cambian.
+La ingesta se dispara con POST /ingesta (o cron sobre backend/ingesta.py).
 """
 from pathlib import Path
 from typing import Optional
@@ -20,7 +20,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 RAIZ = Path(__file__).resolve().parents[1]
-SALIDAS = RAIZ / "Salidas"
+SALIDAS = RAIZ / "data" / "salidas"
 
 app = FastAPI(title="Predicta API", version="0.1.0", description="Deserción y recompra por producto")
 app.add_middleware(
@@ -115,7 +115,7 @@ def ingesta():
     try:
         inicio = time.time()
         proceso = subprocess.run(
-            [sys.executable, str(RAIZ / "06_Mvp" / "ingesta.py")],
+            [sys.executable, str(RAIZ / "backend" / "ingesta.py")],
             capture_output=True,
             text=True,
             timeout=600,

@@ -1,0 +1,681 @@
+<html lang="es" data-tema-defecto="light" data-theme="light">
+  <script
+    src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js"
+    id="eppiocemhmnlbhjplcgkofciiegomcon"
+  ></script>
+  <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script>
+  <script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Estud-IA · Jornada presencial</title>
+    <meta
+      name="description"
+      content="Registro de llegada a la jornada presencial de Estud-IA: tu salón y tus turnos."
+    />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/estilo.css?v=1119a" />
+    <link rel="stylesheet" href="/assets/nodo-theme.css?v=1110c" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#05090A" />
+    <link rel="apple-touch-icon" href="/assets/img/icono-192.png" />
+    <link rel="icon" type="image/png" href="/assets/img/icono-192.png" />
+    <script
+      bis_use="true"
+      type="text/javascript"
+      charset="utf-8"
+      nonce=""
+      data-dynamic-id="35157a1b-d4f8-4ce0-bc7c-6a0ce64d0091"
+      src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/200.js"
+    ></script>
+    <script
+      bis_use="true"
+      type="text/javascript"
+      charset="utf-8"
+      nonce=""
+      data-dynamic-id="35157a1b-d4f8-4ce0-bc7c-6a0ce64d0091"
+      src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/executors/101.js"
+    ></script>
+    <style>
+      [_nghost-ng-c2697620354] {
+        font-family:
+          Open Sans,
+          sans-serif;
+        color: #121212;
+      }
+    </style>
+  </head>
+  <body
+    __processed_0052e2be-ff82-4fb5-81c5-41b9d16c6964__="true"
+    bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJlbmFibGVkIiwiRkFDRUJPT0siOiJlbmFibGVkIiwiVFdJVFRFUiI6ImVuYWJsZWQiLCJSRURESVQiOiJlbmFibGVkIiwiUElOVEVSRVNUIjoiZW5hYmxlZCIsIklOU1RBR1JBTSI6ImVuYWJsZWQiLCJUSUtUT0siOiJkaXNhYmxlZCIsIkxJTktFRElOIjoiZW5hYmxlZCIsIkNPTkZJRyI6ImRpc2FibGVkIn0sInZlcnNpb24iOiIyLjMuMCIsInNjb3JlIjoyMDMwMDB9XQ=="
+  >
+    <header class="nav">
+      <div class="contenedor" bis_skin_checked="1">
+        <a class="nav-marca" href="/">
+          <img class="logo-oscuro" src="/assets/img/estudia-blanco.png" alt="Estud-IA" />
+          <img class="logo-claro" src="/assets/img/estudia-oscuro.png" alt="Estud-IA" />
+          <small> jornada presencial </small>
+        </a>
+        <nav class="nav-enlaces" aria-label="Principal">
+          <a href="/" class="oculto-movil"> Inicio </a>
+          <a href="/estudiante"> Mi grupo </a>
+          <button type="button" data-accion="tema" aria-label="Cambiar a tema oscuro">☾</button>
+        </nav>
+      </div>
+    </header>
+    <main class="contenedor">
+      <section class="seccion" style="max-width: 40rem">
+        <div class="etiqueta" id="h-fecha" bis_skin_checked="1">
+          Jornada presencial · Sábado 28 de noviembre de 2026
+        </div>
+        <h1 id="h-nombre" style="margin: 0.3rem 0 0.5rem">
+          Sábado 28 de noviembre — Encuentro 3: Mejorar y presentar
+        </h1>
+        <div id="h-entrada" bis_skin_checked="1" hidden="">
+          <p class="texto-2" id="h-texto">
+            Escribe tu documento para ver tu agenda del día: a qué salón vas en cada momento.
+            Estudiantes y profesores.
+          </p>
+          <form
+            id="h-form"
+            class="fila"
+            style="gap: 0.5rem; align-items: flex-end; flex-wrap: wrap; margin-top: 1rem"
+            autocomplete="off"
+          >
+            <div class="campo" style="margin: 0; flex: 1; min-width: 200px" bis_skin_checked="1">
+              <label for="h-cedula"> Tu documento (solo números) </label>
+              <input class="entrada" id="h-cedula" inputmode="numeric" maxlength="15" required="" />
+            </div>
+            <button class="boton" type="submit">Ver mi agenda</button>
+          </form>
+          <p class="texto-3" style="font-size: 0.82rem; margin: 0.5rem 0 0; max-width: 62ch">
+            Consultar aquí no registra tu asistencia: la llegada se confirma el día del encuentro,
+            escaneando el código QR de las mesas. Tus datos se tratan conforme a la
+            <a
+              href="https://universidadeafit.widen.net/s/lmgvkbc72h/politica-tratamiento-proteccion-datos-personales"
+              target="_blank"
+              rel="noopener"
+            >
+              Política de tratamiento y protección de datos personales de la Universidad EAFIT
+            </a>
+            .
+          </p>
+          <div class="error" id="h-error" role="alert" bis_skin_checked="1"></div>
+        </div>
+        <div id="h-asignacion" bis_skin_checked="1">
+          <div style="text-align: right; margin-bottom: 0.5rem" bis_skin_checked="1">
+            <button class="boton secundario pequeno" type="button" id="h-salir">
+              Salir · entrar con otro documento
+            </button>
+          </div>
+          <div class="tarjeta ag-persona" bis_skin_checked="1">
+            <div class="etiqueta" bis_skin_checked="1">Capa 2 · sin llegada registrada</div>
+            <h2 style="margin: 0.2rem 0">Jose David Lopez Jaramillo</h2>
+            <div class="fila" style="gap: 0.35rem; flex-wrap: wrap" bis_skin_checked="1">
+              <span class="chip"> Capa 2 </span>
+              <span class="chip"> Inteligencia artificial </span>
+              <span class="chip"> Nivel Intermedio </span>
+              <span class="chip"> Inglés Intermedio-avanzado </span>
+            </div>
+            <p class="texto-2" style="margin: 0.75rem 0 0; font-size: 0.92rem">
+              Revisa que seas tú y que tus datos estén bien. Al confirmar se registra tu asistencia
+              y se te asignan los salones.
+            </p>
+            <div class="aviso" style="margin-top: 0.75rem" bis_skin_checked="1">
+              El registro de llegada se abre el día del encuentro, en las mesas de la entrada.
+            </div>
+            <div class="aviso hk-aviso-qr" style="margin-top: 0.75rem" bis_skin_checked="1">
+              <strong> Importante: </strong>
+              Recuerda: escanear el QR o confirmar tu llegada no garantiza la asistencia. Para que
+              tu participación sea válida, debes permanecer durante toda la sesión de cada
+              componente y firmar la asistencia física correspondiente.
+            </div>
+          </div>
+          <div id="h-equipo" bis_skin_checked="1">
+            <h3 style="margin: 1.5rem 0 0.5rem">Tu equipo</h3>
+            <div class="tarjeta" bis_skin_checked="1">
+              <div class="fila entre" style="gap: 0.5rem; flex-wrap: wrap" bis_skin_checked="1">
+                <div bis_skin_checked="1">
+                  <div class="etiqueta" bis_skin_checked="1">Equipo E-2AVJ</div>
+                  <h2 style="margin: 0.2rem 0">Greenex</h2>
+                </div>
+                <span class="chip ok"> Plan enviado </span>
+              </div>
+              <div class="texto-2" style="font-size: 0.9rem" bis_skin_checked="1">
+                Inteligencia artificial · Intermedio · Biblioteca EAFIT - Tercer piso der -
+                Orientación usuario
+              </div>
+              <div class="texto-2" style="font-size: 0.9rem" bis_skin_checked="1">
+                Reto: IA en operaciones
+              </div>
+              <div
+                class="fila"
+                style="gap: 0.4rem; flex-wrap: wrap; margin-top: 0.4rem"
+                bis_skin_checked="1"
+              >
+                <a
+                  class="boton secundario pequeno"
+                  href="/hackaton/retos/2.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver ficha del reto
+                </a>
+                <a
+                  class="boton fantasma pequeno"
+                  href="/hackaton/retos/2.pdf"
+                  download="Inteligencia Artificial_Intermedio_Green Services and solutions sas - ficha.pdf"
+                >
+                  Descargar ficha
+                </a>
+                <a
+                  class="boton fantasma pequeno"
+                  href="/hackaton/retos/recursos/2.zip"
+                  download="Inteligencia Artificial_Intermedio_Green Services and solutions sas - recursos.zip"
+                >
+                  Descargar recursos e insumos
+                  <span class="texto-3"> (0,3 MB) </span>
+                </a>
+              </div>
+              <ul class="eq-lista">
+                <li>
+                  <span>
+                    Alejandro De Los Rios Porras
+                    <span class="chip"> edita el plan </span>
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    Jose David Lopez Jaramillo
+                    <span class="texto-3"> (tú) </span>
+                  </span>
+                </li>
+                <li>
+                  <span> Edubel Agudelo Leon </span>
+                </li>
+                <li>
+                  <span> Weisman David Estrada Gonzalez </span>
+                </li>
+                <li>
+                  <span> Juan Daniel Hincapie Herrera </span>
+                </li>
+                <li>
+                  <span> Johan Esteban Marquez Ruiz </span>
+                </li>
+              </ul>
+              <form
+                id="eq-vincular"
+                class="fila"
+                style="gap: 0.5rem; align-items: flex-end; flex-wrap: wrap; margin-top: 0.75rem"
+              >
+                <div
+                  class="campo"
+                  style="margin: 0; flex: 1; min-width: 180px"
+                  bis_skin_checked="1"
+                >
+                  <label for="eq-doc"> Vincular a un compañero (su documento) </label>
+                  <input
+                    class="entrada"
+                    id="eq-doc"
+                    inputmode="numeric"
+                    maxlength="15"
+                    required=""
+                  />
+                </div>
+                <button class="boton secundario" type="submit">Buscar</button>
+              </form>
+              <div id="eq-confirmar" bis_skin_checked="1"></div>
+              <div class="error" id="eq-error" role="alert" bis_skin_checked="1"></div>
+              <button
+                class="enlace-boton"
+                type="button"
+                id="eq-salir"
+                style="margin-top: 0.5rem; color: var(--riesgo)"
+              >
+                Salir de este equipo
+              </button>
+            </div>
+            <div class="aviso info" style="margin: 1rem 0 0.75rem" bis_skin_checked="1">
+              Otra persona del equipo tiene la edición de la bitácora.
+              <button class="boton secundario pequeno" type="button" id="eq-tomar">
+                Tomar la edición
+              </button>
+              <button class="boton fantasma pequeno" type="button" id="eq-refrescar">
+                Actualizar
+              </button>
+              <div
+                class="texto-3"
+                style="font-size: 0.82rem; margin-top: 0.3rem"
+                bis_skin_checked="1"
+              >
+                Tomarla no borra nada: sigues desde lo último guardado.
+              </div>
+            </div>
+            <h3 style="margin: 1.5rem 0 0.25rem">Encuentro 2 · Construcción y pruebas</h3>
+            <p class="texto-2" style="font-size: 0.9rem; margin: 0 0 0.6rem">
+              Bitácora del equipo para este encuentro. El plan del encuentro 1 se conserva aparte,
+              más abajo. La edita una persona a la vez; los demás la ven aquí.
+            </p>
+            <div class="tarjeta" bis_skin_checked="1">
+              <div class="campo" bis_skin_checked="1">
+                <label> 1. ¿Cómo se llama su MVP? </label>
+                <div
+                  class="texto-3"
+                  style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                  bis_skin_checked="1"
+                >
+                  Escriban el nombre de la solución que están desarrollando.
+                </div>
+                <input
+                  class="entrada"
+                  data-e2="nombre"
+                  readonly=""
+                  maxlength="120"
+                  value="PREDICTA"
+                />
+              </div>
+              <div class="campo" bis_skin_checked="1">
+                <label> 2. ¿Qué lograron construir hoy? </label>
+                <div
+                  class="texto-3"
+                  style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                  bis_skin_checked="1"
+                >
+                  Describan brevemente qué hace la primera versión de su MVP y qué parte pueden
+                  mostrar funcionando.
+                </div>
+                <textarea
+                  class="entrada"
+                  data-e2="logro"
+                  readonly=""
+                  maxlength="2500"
+                  style="min-height: 6rem"
+                >
+                  Durante la jornada establecimos una dinámica de trabajo colaborativa, orientada a la metodología ágil *Scrumban*, organizando el equipo en dos frentes de desarrollo para avanzar de manera incremental en la construcción de nuestro Producto Mínimo Viable (MVP).
+Equipo 1 – Desarrollo técnico y procesamiento de datos:
+Se creó el repositorio del proyecto en GitHub y se inició la estructuración de un script en Python para automatizar los procesos de limpieza, transformación y unificación de datos.
+Como primer resultado, se avanzó en la generación de un DataFrame estructurado, que servirá como base para disponer de información estandarizada y preparada para su posterior integración con soluciones de inteligencia artificial.
+Equipo 2 – Definición y estructuración del MVP:
+Se trabajó en la conceptualización del producto, identificando sus componentes fundamentales y estableciendo las bases para orientar el desarrollo técnico hacia una solución funcional.
+Resultado de la jornada:
+Logramos establecer la organización inicial del proyecto, crear su repositorio de desarrollo y avanzar en el primer componente técnico del MVP, enfocado en la automatización del procesamiento de datos.
+Nuestro siguiente objetivo será validar el funcionamiento del script, comprobar la calidad de los datos transformados e integrar los avances técnicos con los requerimientos definidos para el MVP.
+                </textarea>
+              </div>
+              <div class="campo" bis_skin_checked="1">
+                <label> 3. ¿Qué pruebas realizarán para comprobar el MVP? </label>
+                <div
+                  class="texto-3"
+                  style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                  bis_skin_checked="1"
+                >
+                  Planteen entre cinco y seis pruebas. Cada una con lo que harán y lo que esperan
+                  que ocurra; al hacerla, márquenla como Realizada y cuenten qué pasó.
+                </div>
+                <div
+                  class="tarjeta compacta"
+                  style="margin: 0.5rem 0"
+                  data-prueba="0"
+                  bis_skin_checked="1"
+                >
+                  <div class="fila entre" style="gap: 0.5rem" bis_skin_checked="1">
+                    <strong> Prueba 1 </strong>
+                  </div>
+                  <div class="campo" style="margin: 0.4rem 0" bis_skin_checked="1">
+                    <label> Prueba </label>
+                    <div
+                      class="texto-3"
+                      style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                      bis_skin_checked="1"
+                    >
+                      ¿Qué harán o pedirán hacer para comprobar el funcionamiento del MVP?
+                    </div>
+                    <textarea
+                      class="entrada"
+                      data-e2="prueba"
+                      data-i="0"
+                      readonly=""
+                      maxlength="800"
+                      style="min-height: 3.2rem"
+                    >
+                      que el archivo que se encarga de generar la limpieza de los datos funcione con diferentes fuentes de informacion, ya que buscamos que trabaje de forma automatica a medida que la empresa vaya ingresando los datos.
+corroborar que los repositorios esten actualizados y funcionando para poder tener relacion con el equipo de trabajo a distancia y la informacion unificada.
+                    </textarea>
+                  </div>
+                  <div class="campo" style="margin: 0.4rem 0" bis_skin_checked="1">
+                    <label> Resultado esperado </label>
+                    <div
+                      class="texto-3"
+                      style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                      bis_skin_checked="1"
+                    >
+                      ¿Qué debería ocurrir si funciona como esperan?
+                    </div>
+                    <textarea
+                      class="entrada"
+                      data-e2="esperado"
+                      data-i="0"
+                      readonly=""
+                      maxlength="800"
+                      style="min-height: 3.2rem"
+                    >
+                      que los datos sean procesados de forma automatica cada vez que se agreguen nuevos archivos y que el usuario final pueda tener a disposicion la informacion cada que sea requerida
+                    </textarea>
+                  </div>
+                  <div class="campo" style="margin: 0.4rem 0" bis_skin_checked="1">
+                    <label> Estado </label>
+                    <select
+                      class="entrada"
+                      data-e2="estado"
+                      data-i="0"
+                      disabled=""
+                      style="max-width: 12rem"
+                    >
+                      <option value="pendiente" selected="">Pendiente</option>
+                      <option value="realizada">Realizada</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="campo" bis_skin_checked="1">
+                <label> 4. ¿Qué necesitan mejorar para el próximo encuentro? </label>
+                <div
+                  class="texto-3"
+                  style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                  bis_skin_checked="1"
+                >
+                  Escriban hasta tres mejoras o pendientes, empezando por el más importante. Pueden
+                  incluir dificultades técnicas o comentarios recibidos durante las pruebas.
+                </div>
+                <textarea
+                  class="entrada"
+                  data-e2="mejoras"
+                  readonly=""
+                  maxlength="2500"
+                  style="min-height: 5rem"
+                >
+                  Mejorar la definicion en las dinamicas de roles y ser mas autodidacticos entre semana aumentando el tiempo dedicado por fuera de clase
+                </textarea>
+              </div>
+              <div
+                class="fila entre"
+                style="gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem"
+                bis_skin_checked="1"
+              >
+                <span class="texto-3" id="e2-guardado" style="font-size: 0.85rem">
+                  Enviado · 21 nov 2026, 10:50 a. m.
+                </span>
+              </div>
+            </div>
+            <details class="plegable" style="margin-top: 1.5rem" open="">
+              <summary>
+                <strong> Encuentro 1 · Plan de trabajo </strong>
+                <span class="chip ok" style="margin-left: 0.4rem"> enviado </span>
+              </summary>
+              <p class="texto-2" style="font-size: 0.9rem; margin: 0.6rem 0">
+                Un solo plan para todo el equipo. Lo edita una persona a la vez; los demás lo ven
+                aquí.
+              </p>
+              <div class="tarjeta" bis_skin_checked="1">
+                <div class="campo" bis_skin_checked="1">
+                  <label> ¿Cuál es la solución que propone el equipo? </label>
+                  <div
+                    class="texto-3"
+                    style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                    bis_skin_checked="1"
+                  >
+                    Expliquen qué quieren desarrollar y cómo ayudaría a resolver el problema.
+                  </div>
+                  <textarea
+                    class="entrada"
+                    data-plan="solucion"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 6rem"
+                    placeholder=""
+                  >
+                    Queremos dejar atrás el dolor de cabeza de buscar información regada en mil archivos de Excel y plataformas desconectadas. Vamos a crear un cerebro centralizado y automatizado para el equipo de Operaciones de Green CSS. Esta solución se encargará de juntar, ordenar y analizar automáticamente los datos de ventas, compras, la TRM y el comportamiento de los clientes. Así, en lugar de reaccionar tarde a los problemas, la gerencia y los comerciales tendrán una visión clara, unificada y predictiva para adelantarse a las necesidades de sus clientes y tomar decisiones en minutos y no en días.
+                  </textarea>
+                </div>
+                <div class="campo" bis_skin_checked="1">
+                  <label> ¿Qué construirán como Producto Mínimo Viable (MVP)? </label>
+                  <div
+                    class="texto-3"
+                    style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                    bis_skin_checked="1"
+                  >
+                    Describan la versión más sencilla de la solución y sus funciones indispensables.
+                  </div>
+                  <textarea
+                    class="entrada"
+                    data-plan="mvp"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 6rem"
+                    placeholder=""
+                  >
+                    Vamos a construir un prototipo funcional de backend y panel de control (dashboard) alojado en un entorno Linux. La versión más sencilla y funcional incluirá:
+Un sistema de ingestión y unificación que absorba automáticamente las planillas y datos dispersos.
+Una base de datos centralizada limpia y estructurada.
+Un motor de análisis básico que relacione las compras, las recurrencias y los clientes fríos o frecuentes, mostrando los indicadores clave de forma visual y accesible para el equipo.
+                  </textarea>
+                </div>
+                <div class="campo" bis_skin_checked="1">
+                  <label> ¿Qué actividades realizarán para construir el MVP? </label>
+                  <div
+                    class="texto-3"
+                    style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                    bis_skin_checked="1"
+                  >
+                    Entre tres y cinco actividades. No tienen que llenar las cinco.
+                  </div>
+                  <textarea
+                    class="entrada"
+                    data-plan="a1"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 2.6rem"
+                    placeholder="Actividad 1"
+                  >
+                    Mapeo y estructuración de las fuentes de datos actuales (identificar formato de los Excels y definir cómo se unificarán)
+                  </textarea>
+                  <textarea
+                    class="entrada"
+                    data-plan="a2"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 2.6rem"
+                    placeholder="Actividad 2"
+                  >
+                    Desarrollo del backend en Python y utilizar bases de datos relacionales, para automatizar la limpieza y almacenamiento de la información
+                  </textarea>
+                  <textarea
+                    class="entrada"
+                    data-plan="a3"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 2.6rem"
+                    placeholder="Actividad 3"
+                  >
+                    Construcción de las consultas y la lógica de negocio básica para cruzar ventas, comportamiento de clientes y TRM, generando los primeros reportes automatizados
+                  </textarea>
+                  <textarea
+                    class="entrada"
+                    data-plan="a4"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 2.6rem"
+                    placeholder="Actividad 4 (opcional)"
+                  >
+                  </textarea>
+                  <textarea
+                    class="entrada"
+                    data-plan="a5"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 2.6rem"
+                    placeholder="Actividad 5 (opcional)"
+                  >
+                  </textarea>
+                </div>
+                <div class="campo" bis_skin_checked="1">
+                  <label> ¿Qué recursos necesitan para desarrollar el MVP? </label>
+                  <div
+                    class="texto-3"
+                    style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                    bis_skin_checked="1"
+                  >
+                    Computadores, software gratuito, plataformas, datos, información, materiales,
+                    apoyo técnico u otros. No incluyan software licenciado de pago.
+                  </div>
+                  <textarea
+                    class="entrada"
+                    data-plan="recursos"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 6rem"
+                    placeholder=""
+                  >
+                    Equipos: Computadores personales para el desarrollo.
+Software y plataformas gratuitas: Entorno Linux, Python (con librerías de análisis de datos), VS Code, Git para control de versiones y contenedores Docker.
+Datos e información: Los archivos de datos anonimizados de ventas, clientes y productos que provee la empresa en el reto.
+Apoyo técnico: La documentación y manuales que aporte la organización para entender el significado del recurso «com» y las estructuras de datos.
+                  </textarea>
+                </div>
+                <div class="campo" bis_skin_checked="1">
+                  <label> ¿Cómo comprobarán que el MVP funciona o cumple su propósito? </label>
+                  <div
+                    class="texto-3"
+                    style="font-size: 0.82rem; margin-bottom: 0.3rem"
+                    bis_skin_checked="1"
+                  >
+                    Describan una prueba sencilla y el resultado que esperan observar.
+                  </div>
+                  <textarea
+                    class="entrada"
+                    data-plan="prueba"
+                    readonly=""
+                    maxlength="2500"
+                    style="min-height: 6rem"
+                    placeholder=""
+                  >
+                    Haremos una prueba piloto con un lote de datos históricos reales pero anonimizados proporcionados por el reto.
+Lo que haremos: Alimentaremos el sistema con la información dispersa en múltiples planillas y ejecutaremos el proceso automatizado de consolidación.
+El resultado que esperamos observar: Que el sistema logre unificar y procesar los datos en pocos segundos (pasando de horas de trabajo manual en Excel a un reporte automatizado instantáneo) y entregue una vista clara de qué se le ha vendido a cada cliente y cuáles son sus patrones de recurrencia, reduciendo a cero los errores humanos de transcripción.
+                  </textarea>
+                </div>
+                <div
+                  class="fila entre"
+                  style="gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem"
+                  bis_skin_checked="1"
+                >
+                  <span class="texto-3" id="eq-guardado" style="font-size: 0.85rem">
+                    Enviado · 14 nov 2026, 12:36 p. m.
+                  </span>
+                </div>
+              </div>
+            </details>
+          </div>
+          <button class="boton fantasma pequeno" type="button" id="h-otra" style="margin-top: 1rem">
+            Salir · entrar con otro documento
+          </button>
+        </div>
+        <div id="h-momentos" style="margin-top: 1.5rem" bis_skin_checked="1">
+          <div class="tarjeta compacta hk-info" style="margin-bottom: 1rem" bis_skin_checked="1">
+            <div class="etiqueta" bis_skin_checked="1">Para orientarte en el campus</div>
+            <a
+              class="boton secundario pequeno"
+              href="/api/hackaton?mapa=1795178806786"
+              target="_blank"
+              rel="noopener"
+              style="margin-top: 0.6rem"
+            >
+              Ver mapa de EAFIT
+            </a>
+            <div class="texto-3" style="font-size: 0.8rem; margin-top: 0.3rem" bis_skin_checked="1">
+              Se abre aparte: puedes ampliarlo con los dedos.
+            </div>
+          </div>
+          <div style="margin-bottom: 1.25rem" bis_skin_checked="1">
+            <div class="tarjeta compacta hk-wifi" bis_skin_checked="1">
+              <div class="etiqueta" bis_skin_checked="1">Wifi del campus</div>
+              <div bis_skin_checked="1">
+                Red:
+                <strong class="mono"> AlcaldiaEAFIT </strong>
+              </div>
+              <div bis_skin_checked="1">
+                Clave:
+                <strong class="mono"> Tecnologia2026* </strong>
+                <button class="enlace-boton" type="button" data-copiar-wifi="Tecnologia2026*">
+                  Copiar
+                </button>
+              </div>
+            </div>
+          </div>
+          <h3 style="margin: 0 0 0.5rem">El día</h3>
+          <ol class="agenda general">
+            <li class="ag-item">
+              <div class="ag-hora mono" bis_skin_checked="1">8:00 a. m. – 12:00 p. m.</div>
+              <div class="ag-cuerpo" bis_skin_checked="1">
+                <strong> Hackatón técnica </strong>
+                <span class="texto-2"> Por línea, nivel y reto, con tu equipo </span>
+              </div>
+            </li>
+            <li class="ag-item">
+              <div class="ag-hora mono" bis_skin_checked="1">12:00 p. m. – 2:00 p. m.</div>
+              <div class="ag-cuerpo" bis_skin_checked="1">
+                <strong> Almuerzo y competencias socioemocionales </strong>
+                <span class="texto-2"> En dos turnos: tu agenda te dice cuál te toca </span>
+              </div>
+            </li>
+            <li class="ag-item">
+              <div class="ag-hora mono" bis_skin_checked="1">2:00 p. m. – 4:00 p. m.</div>
+              <div class="ag-cuerpo" bis_skin_checked="1">
+                <strong> Inglés </strong>
+                <span class="texto-2"> Según tu nivel de inglés </span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    </main>
+    <footer class="pie">
+      <div class="contenedor" bis_skin_checked="1">
+        <div class="creditos" bis_skin_checked="1">
+          <span class="etiqueta"> Estud-IA es un programa de la </span>
+          <img
+            class="logo-alcaldia"
+            src="/assets/img/alcaldia.jpg"
+            alt="Alcaldía de Medellín · Distrito de Ciencia, Tecnología e Innovación"
+          />
+        </div>
+        <div class="logos operadores" bis_skin_checked="1">
+          <span class="etiqueta"> Operan </span>
+          <span class="texto-logo"> Corporación Gilberto Echeverri Mejía </span>
+          <img class="logo-oscuro" src="/assets/img/nodo-blanco.png" alt="NODO" />
+          <img class="logo-claro" src="/assets/img/nodo-periwinkle.png" alt="NODO" />
+          <img class="logo-oscuro" src="/assets/img/eafit-blanco.svg" alt="Universidad EAFIT" />
+          <img class="logo-claro" src="/assets/img/eafit-zafre.svg" alt="Universidad EAFIT" />
+        </div>
+        <p class="pie-datos">
+          <a
+            href="https://universidadeafit.widen.net/s/lmgvkbc72h/politica-tratamiento-proteccion-datos-personales"
+            target="_blank"
+            rel="noopener"
+          >
+            Tratamiento de datos personales
+          </a>
+        </p>
+      </div>
+    </footer>
+    <script src="/assets/base.js?v=1119o"></script>
+    <script src="/assets/hackaton.js?v=1126a"></script>
+  </body>
+  <app-ls-content ng-version="17.3.7"> </app-ls-content>
+</html>

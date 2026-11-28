@@ -3,8 +3,8 @@ Requieren Python 3.10 o superior. No instalan paquetes, no usan credenciales y n
 
 Desde la carpeta del paquete:
 ```
-python 04_Codigo/ejemplo_operaciones.py
-python 04_Codigo/modelo_compra.py
+python docs/ejemplos/ejemplo_operaciones.py
+python docs/ejemplos/modelo_compra.py
 ```
 El primero integra ventas y base instalada y produce indicadores por cliente. El segundo entrena una regresión logística de compra a 30 días, selecciona el umbral con validación temporal y compara con una regla de compra reciente. Salidas: CSV y JSON dentro de Salidas. En Windows, si `python` no está disponible, pueden probar `py`.
 

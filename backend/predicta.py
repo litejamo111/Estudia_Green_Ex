@@ -1,7 +1,7 @@
 """Predicta - punto de entrada del MVP.
 
-    python3.11 06_Mvp/predicta.py ingesta   # pipeline + motor
-    python3.11 06_Mvp/predicta.py api       # servidor FastAPI
+    python3.11 backend/predicta.py ingesta   # pipeline + motor
+    python3.11 backend/predicta.py api       # servidor FastAPI
 """
 from pathlib import Path
 import json

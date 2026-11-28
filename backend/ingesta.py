@@ -3,10 +3,10 @@
 Ejecuta el pipeline de datos y el motor de decisiones en orden. Pensado para
 cron, un POST /ingesta o ejecución manual:
 
-    python 06_Mvp/ingesta.py
+    python backend/ingesta.py
 
-Los CSV de 01_Datos se reemplazan sin cambiar el esquema y el corte se toma de
-02_Documentacion/parametros_prueba.json.
+Los CSV de data/entrada se reemplazan sin cambiar el esquema y el corte se toma de
+docs/documentacion/parametros_prueba.json.
 """
 from pathlib import Path
 import json
@@ -15,14 +15,14 @@ import sys
 import time
 
 RAIZ = Path(__file__).resolve().parents[1]
-SALIDAS = RAIZ / "Salidas"
+SALIDAS = RAIZ / "data" / "salidas"
 
 
 def ejecutar():
     inicio = time.time()
     for script in ("pipeline_datos.py", "motor_decisiones.py"):
         proceso = subprocess.run(
-            [sys.executable, str(RAIZ / "06_Mvp" / script)],
+            [sys.executable, str(RAIZ / "backend" / script)],
             capture_output=True,
             text=True,
         )

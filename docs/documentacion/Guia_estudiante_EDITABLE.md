@@ -62,7 +62,7 @@ Los patrones del conjunto son de prueba. Un buen resultado aquí permite verific
 
 Prueben conversión USD/COP, exclusión de anuladas, identificación de cliente frío, renovación próxima, cliente inexistente y ausencia de datos futuros. En 05_Validacion hay casos controlados independientes y resultados de referencia. La copia con incidencias es opcional; nunca la mezclen con ventas.csv para construir el modelo.
 
-Ejecuten python 04_Codigo/ejemplo_operaciones.py desde la carpeta del paquete. Se crea una carpeta Salidas con resumen_clientes.csv y resumen_prueba.json. El ejemplo usa solo la biblioteca estándar, prepara indicadores y una línea base; no entrena IA ni constituye la solución completa.
+Ejecuten python docs/ejemplos/ejemplo_operaciones.py desde la carpeta del paquete. Se crea una carpeta Salidas con resumen_clientes.csv y resumen_prueba.json. El ejemplo usa solo la biblioteca estándar, prepara indicadores y una línea base; no entrena IA ni constituye la solución completa.
 
 Presenten: problema y usuario elegidos, demostración del MVP, fuente y tratamiento de datos, reglas o modelo, al menos una prueba realizada, limitaciones y próximos cambios. Usen las plantillas editables para documentarlo; no necesitan completar todas las funcionalidades posibles.
 

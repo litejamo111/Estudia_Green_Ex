@@ -5,11 +5,11 @@ from collections import defaultdict
 import csv,json,math,statistics
 
 def run(root):
-    with (root/'01_Datos/ventas.csv').open(encoding='utf-8-sig') as f: sales=list(csv.DictReader(f))
+    with (root/'data'/'entrada'/'ventas.csv').open(encoding='utf-8-sig') as f: sales=list(csv.DictReader(f))
     hist=defaultdict(list)
     for v in sales:
         if v['estado']=='Confirmada':hist[v['cliente_id']].append(date.fromisoformat(v['fecha']))
-    with (root/'01_Datos/clientes.csv').open(encoding='utf-8-sig') as f: clients=list(csv.DictReader(f))
+    with (root/'data'/'entrada'/'clientes.csv').open(encoding='utf-8-sig') as f: clients=list(csv.DictReader(f))
     rows=[]
     for year in [2025,2026]:
         for month in range(1,13):
@@ -46,10 +46,10 @@ def run(root):
     thresholds=[.2,.3,.4,.5,.6,.7,.8]
     threshold=max(thresholds,key=lambda t:metrics(valid,lambda x:prob(x)>=t)['F1'])
     result={'modelo':'Regresión logística didáctica; pesos aprendidos en datos de prueba','entrenamiento_hasta':'2026-04-30','validacion':'mayo-junio 2026','prueba':'julio-septiembre 2026','ventana_objetivo_dias':30,'umbral_elegido_solo_en_validacion':threshold,'variables':fields,'media_entrenamiento':mu,'desviacion_entrenamiento':sd,'pesos':w,'validacion':metrics(valid,lambda x:prob(x)>=threshold),'prueba_modelo':metrics(test,lambda x:prob(x)>=threshold),'prueba_linea_base_compra_ultimos_30d':metrics(test,lambda x:x['frecuencia_30d']>0),'advertencia':'No demuestra rendimiento en datos empresariales. No cambiar umbral usando la prueba final. Fotografías del mismo cliente reaparecen en distintos meses; mide seguimiento temporal, no generalización a clientes nuevos.'}
-    dest=root/'Salidas';dest.mkdir(exist_ok=True)
+    dest=root/'data'/'salidas';dest.mkdir(exist_ok=True)
     (dest/'metricas_modelo.json').write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     for name,data in [('fotografias_modelo.csv',rows),('predicciones_prueba.csv',[dict(x,probabilidad_prueba=round(prob(x),6),prediccion=int(prob(x)>=threshold)) for x in test])]:
         with (dest/name).open('w',newline='',encoding='utf-8-sig') as f:
             writer=csv.DictWriter(f,fieldnames=data[0]);writer.writeheader();writer.writerows(data)
     print(json.dumps(result,ensure_ascii=False,indent=2));return result
-if __name__=='__main__':run(Path(__file__).resolve().parents[1])
+if __name__=='__main__':run(Path(__file__).resolve().parents[2])

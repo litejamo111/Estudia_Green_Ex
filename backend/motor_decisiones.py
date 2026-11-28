@@ -6,10 +6,10 @@ Produce, al corte vigente, cuatro artefactos para el dashboard:
   - probabilidad de recompra a 60 días por cliente-producto (tasa calibrada)
   - estado de la ventana de recompra por cliente-producto
 
-Sin dependencias externas ni red. Requiere Salidas/datos_unificados.csv
-(lo genera 06_Mvp/pipeline_datos.py).
+Sin dependencias externas ni red. Requiere data/salidas/datos_unificados.csv
+(lo genera backend/pipeline_datos.py).
 
-Uso: python 06_Mvp/motor_decisiones.py
+Uso: python backend/motor_decisiones.py
 Salidas: modelos_decision.json, clientes_decision.json,
          productos_decision.json, dashboard.json
 """
@@ -25,7 +25,7 @@ import subprocess
 import sys
 
 RAIZ = Path(__file__).resolve().parents[1]
-SALIDAS = RAIZ / "Salidas"
+SALIDAS = RAIZ / "data" / "salidas"
 
 HORIZONTE_DIAS = 60
 CAMPOS = ["recencia_dias", "compras_30d", "compras_90d", "compras_total"]
@@ -53,8 +53,8 @@ def intervalos(fechas):
 
 
 def cargar():
-    clientes = leer_csv(RAIZ / "01_Datos" / "clientes.csv")
-    productos = {p["producto_id"]: p for p in leer_csv(RAIZ / "01_Datos" / "productos.csv")}
+    clientes = leer_csv(RAIZ / "data" / "entrada" / "clientes.csv")
+    productos = {p["producto_id"]: p for p in leer_csv(RAIZ / "data" / "entrada" / "productos.csv")}
     unificadas = leer_csv(SALIDAS / "datos_unificados.csv")
 
     ventas = defaultdict(list)      # cliente -> [(fecha, importe, producto)]
@@ -231,9 +231,9 @@ def tasas_recompra(cortes, producto_ids, pares):
 
 def main():
     if not (SALIDAS / "datos_unificados.csv").exists():
-        subprocess.run([sys.executable, str(RAIZ / "06_Mvp" / "pipeline_datos.py")], check=True)
+        subprocess.run([sys.executable, str(RAIZ / "backend" / "pipeline_datos.py")], check=True)
     clientes, productos, ventas, pares = cargar()
-    cfg = json.loads((RAIZ / "02_Documentacion" / "parametros_prueba.json").read_text(encoding="utf-8"))
+    cfg = json.loads((RAIZ / "docs" / "documentacion" / "parametros_prueba.json").read_text(encoding="utf-8"))
     corte_actual = date.fromisoformat(cfg["fecha_corte"])
 
     cortes = [date(a, m, monthrange(a, m)[1]) for a in (2025, 2026) for m in range(1, 13)]

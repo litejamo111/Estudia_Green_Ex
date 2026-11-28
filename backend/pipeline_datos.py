@@ -1,11 +1,11 @@
 """Predicta - Limpieza y unificación de las tablas de prueba de Green Services.
 
-Lee los CSV de 01_Datos, valida claves y tipos, convierte USD a COP con la TRM
+Lee los CSV de data/entrada, valida claves y tipos, convierte USD a COP con la TRM
 de la fecha de cada venta y escribe una única tabla a nivel de venta lista para
 consumo (analítica o capa de IA). Sin dependencias externas ni red.
 
-Uso: python 06_Mvp/pipeline_datos.py
-Salidas: Salidas/datos_unificados.csv, Salidas/reporte_calidad.json
+Uso: python backend/pipeline_datos.py
+Salidas: data/salidas/datos_unificados.csv, data/salidas/reporte_calidad.json
 """
 from pathlib import Path
 from collections import defaultdict, Counter
@@ -14,8 +14,8 @@ import csv
 import json
 
 RAIZ = Path(__file__).resolve().parents[1]
-DATOS = RAIZ / "01_Datos"
-SALIDAS = RAIZ / "Salidas"
+DATOS = RAIZ / "data" / "entrada"
+SALIDAS = RAIZ / "data" / "salidas"
 
 ESTADOS = {"Confirmada", "Anulada"}
 MONEDAS = {"COP", "USD"}
