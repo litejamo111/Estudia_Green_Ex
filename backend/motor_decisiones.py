@@ -482,6 +482,8 @@ def main():
         "producto": "Predicta",
         "corte": str(corte_actual),
         "horizonte_dias": HORIZONTE_DIAS,
+        "umbral_riesgo": umbral,
+        "modelo_elegido": elegido["nombre"],
         "kpis": {
             "clientes": len(clientes_decision),
             "frios": estados["frio"],

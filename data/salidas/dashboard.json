@@ -2,6 +2,8 @@
   "producto": "Predicta",
   "corte": "2026-10-31",
   "horizonte_dias": 60,
+  "umbral_riesgo": 0.25,
+  "modelo_elegido": "gradient_boosting",
   "kpis": {
     "clientes": 120,
     "frios": 48,

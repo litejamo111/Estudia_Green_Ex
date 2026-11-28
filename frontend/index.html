@@ -198,7 +198,7 @@
         <option value="">Todos</option>
         <option value="frio">Fríos</option>
         <option value="alta">Prioridad alta</option>
-        <option value="riesgo">Riesgo ≥ 0,5</option>
+        <option value="riesgo">Riesgo ≥ 0,50</option>
       </select>
       <span class="chip" id="conteo">—</span>
     </div>
@@ -311,6 +311,7 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
     };
 
     $('corte').textContent = 'corte ' + dash.corte;
+
     try{
       const r = await fetch('api/salud',{cache:'no-store'});
       $('apiLink').textContent = r.ok ? 'API en vivo' : 'datos estáticos';
@@ -324,7 +325,7 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       kpi(k.por_vencer,'coberturas por vencer','alert'),
       kpi(k.en_ventana,'en ventana de recompra','ok'),
       kpi(pct(k.riesgo_promedio),'riesgo promedio','risk'),
-      kpi(k.alto_riesgo,'con riesgo ≥ 0,5','risk'),
+      kpi(cli.filter(c => c.riesgo_desercion >= 0.5).length,'con riesgo ≥ 0,50','risk'),
       kpi(k.clientes_prioridad_alta,'prioridad alta','alert'),
       kpi(k.recientes,'compras recientes','ok')
     ].join('');
@@ -462,7 +463,7 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       ['Elegido por', 'top-20 en validación'],
       ['Ventana', met.ventana_objetivo_dias + ' días'],
       ['Entrenado hasta', met.entrenamiento_hasta],
-      ['Umbral de riesgo', met.umbral_elegido_solo_en_validacion],
+      ['Umbral de alerta', met.umbral_elegido_solo_en_validacion + ' (eligido en validación)'],
       ['Precisión (prueba)', pct(pm.precision)],
       ['Exhaustividad (prueba)', pct(pm.recall)],
       ['F1 (prueba)', pm.F1.toFixed(3).replace('.',',')],
