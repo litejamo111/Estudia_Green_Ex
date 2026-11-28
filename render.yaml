@@ -1,0 +1,10 @@
+# Alternativa gestionada: API en Render (el frontend puede quedarse en GitHub Pages).
+services:
+  - type: web
+    name: predicta-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /salud
+    autoDeploy: true

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Bootstrap de la VM: Docker + Caddy + API. Ejecutar dentro de la VM como root.
+set -euo pipefail
+REPO="${REPO:-https://github.com/litejamo111/Estudia_Green_Ex.git}"
+DIR=/opt/predicta
+
+apt-get update -y
+apt-get install -y ca-certificates curl git python3
+command -v docker >/dev/null || curl -fsSL https://get.docker.com | sh
+
+[[ -d $DIR/.git ]] || git clone --depth 1 "$REPO" "$DIR"
+cd "$DIR"
+
+python3 backend/predicta.py ingesta
+bash deploy/build.sh
+docker compose -f deploy/gcp/docker-compose.yml up -d --build
+
+echo "== estado"
+docker compose -f deploy/gcp/docker-compose.yml ps
+curl -s -o /dev/null -w "local api: %{http_code}\n" http://127.0.0.1:8000/salud || true
