@@ -3,7 +3,69 @@
   "corte_actual": "2026-10-31",
   "horizonte_dias": 60,
   "desercion": {
-    "modelo": "Regresión logística didáctica; etiqueta = sin compra en los próximos 60 días",
+    "modelo": "Clasificador de deserción; etiqueta = sin compra en los próximos 60 días",
+    "elegido": "gradient_boosting",
+    "criterio_eleccion": "precisión en el top 20 de validación (may–jun 2026); desempata AUC",
+    "candidatos": [
+      {
+        "nombre": "logistica",
+        "umbral": 0.25,
+        "validacion": {
+          "n": 240,
+          "TP": 92,
+          "TN": 28,
+          "FP": 110,
+          "FN": 10,
+          "precision": 0.4554,
+          "recall": 0.902,
+          "F1": 0.6053,
+          "exactitud_balanceada": 0.5524
+        },
+        "prueba": {
+          "n": 240,
+          "TP": 100,
+          "TN": 17,
+          "FP": 114,
+          "FN": 9,
+          "precision": 0.4673,
+          "recall": 0.9174,
+          "F1": 0.6192,
+          "exactitud_balanceada": 0.5236
+        },
+        "auc_validacion": 0.6229,
+        "top20_validacion": 0.75,
+        "top20_prueba": 0.9
+      },
+      {
+        "nombre": "gradient_boosting",
+        "umbral": 0.25,
+        "validacion": {
+          "n": 240,
+          "TP": 86,
+          "TN": 64,
+          "FP": 74,
+          "FN": 16,
+          "precision": 0.5375,
+          "recall": 0.8431,
+          "F1": 0.6565,
+          "exactitud_balanceada": 0.6535
+        },
+        "prueba": {
+          "n": 240,
+          "TP": 97,
+          "TN": 48,
+          "FP": 83,
+          "FN": 12,
+          "precision": 0.5389,
+          "recall": 0.8899,
+          "F1": 0.6713,
+          "exactitud_balanceada": 0.6282
+        },
+        "auc_validacion": 0.6775,
+        "top20_validacion": 0.75,
+        "top20_prueba": 0.8
+      }
+    ],
     "variables": [
       "recencia_dias",
       "compras_30d",
@@ -29,7 +91,7 @@
       -0.288464,
       0.158962
     ],
-    "umbral_riesgo": 0.35,
+    "umbral_riesgo": 0.25,
     "criterio_umbral": "exactitud balanceada en validación",
     "entrenamiento": {
       "desde": "2025-03-31",
@@ -38,25 +100,25 @@
     },
     "validacion": {
       "n": 240,
-      "TP": 34,
-      "TN": 116,
-      "FP": 22,
-      "FN": 68,
-      "precision": 0.6071,
-      "recall": 0.3333,
-      "F1": 0.4304,
-      "exactitud_balanceada": 0.587
+      "TP": 86,
+      "TN": 64,
+      "FP": 74,
+      "FN": 16,
+      "precision": 0.5375,
+      "recall": 0.8431,
+      "F1": 0.6565,
+      "exactitud_balanceada": 0.6535
     },
     "prueba": {
       "n": 240,
-      "TP": 53,
-      "TN": 100,
-      "FP": 31,
-      "FN": 56,
-      "precision": 0.631,
-      "recall": 0.4862,
-      "F1": 0.5492,
-      "exactitud_balanceada": 0.6248
+      "TP": 97,
+      "TN": 48,
+      "FP": 83,
+      "FN": 12,
+      "precision": 0.5389,
+      "recall": 0.8899,
+      "F1": 0.6713,
+      "exactitud_balanceada": 0.6282
     },
     "regla_base_ciclo_propio": {
       "n": 240,
@@ -69,9 +131,9 @@
       "F1": 0.614,
       "exactitud_balanceada": 0.6501
     },
-    "auc_prueba": 0.6744,
+    "auc_prueba": 0.6652,
     "top_20_prueba": {
-      "aciertos_modelo": 18,
+      "aciertos_modelo": 16,
       "aciertos_regla": 11,
       "tasa_base": 0.4542
     },

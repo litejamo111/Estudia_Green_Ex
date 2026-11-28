@@ -8,89 +8,89 @@
     "por_vencer": 14,
     "en_ventana": 35,
     "recientes": 23,
-    "riesgo_promedio": 0.3458,
-    "alto_riesgo": 58,
+    "riesgo_promedio": 0.3925,
+    "alto_riesgo": 102,
     "clientes_prioridad_alta": 20
   },
   "top_riesgo": [
     {
-      "cliente_id": "CLI016",
-      "nombre": "Cliente de prueba 016",
+      "cliente_id": "CLI001",
+      "nombre": "Cliente de prueba 001",
       "estado": "frio",
-      "riesgo_desercion": 0.484,
-      "dias_sin_compra": 219,
-      "prioridad": "alta"
-    },
-    {
-      "cliente_id": "CLI076",
-      "nombre": "Cliente de prueba 076",
-      "estado": "frio",
-      "riesgo_desercion": 0.4718,
-      "dias_sin_compra": 194,
-      "prioridad": "alta"
-    },
-    {
-      "cliente_id": "CLI061",
-      "nombre": "Cliente de prueba 061",
-      "estado": "frio",
-      "riesgo_desercion": 0.4714,
-      "dias_sin_compra": 184,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 212,
       "prioridad": "alta"
     },
     {
       "cliente_id": "CLI011",
       "nombre": "Cliente de prueba 011",
       "estado": "frio",
-      "riesgo_desercion": 0.4616,
+      "riesgo_desercion": 0.6372,
       "dias_sin_compra": 215,
       "prioridad": "alta"
     },
     {
-      "cliente_id": "CLI001",
-      "nombre": "Cliente de prueba 001",
+      "cliente_id": "CLI016",
+      "nombre": "Cliente de prueba 016",
       "estado": "frio",
-      "riesgo_desercion": 0.4614,
-      "dias_sin_compra": 212,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 219,
       "prioridad": "alta"
     },
     {
-      "cliente_id": "CLI106",
-      "nombre": "Cliente de prueba 106",
+      "cliente_id": "CLI032",
+      "nombre": "Cliente de prueba 032",
       "estado": "frio",
-      "riesgo_desercion": 0.4613,
-      "dias_sin_compra": 210,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 64,
       "prioridad": "alta"
     },
     {
       "cliente_id": "CLI041",
       "nombre": "Cliente de prueba 041",
       "estado": "frio",
-      "riesgo_desercion": 0.4606,
+      "riesgo_desercion": 0.6372,
       "dias_sin_compra": 191,
       "prioridad": "alta"
     },
     {
-      "cliente_id": "CLI081",
-      "nombre": "Cliente de prueba 081",
+      "cliente_id": "CLI050",
+      "nombre": "Cliente de prueba 050",
       "estado": "frio",
-      "riesgo_desercion": 0.4524,
-      "dias_sin_compra": 261,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 82,
       "prioridad": "alta"
     },
     {
-      "cliente_id": "CLI096",
-      "nombre": "Cliente de prueba 096",
+      "cliente_id": "CLI061",
+      "nombre": "Cliente de prueba 061",
       "estado": "frio",
-      "riesgo_desercion": 0.4493,
-      "dias_sin_compra": 186,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 184,
       "prioridad": "alta"
     },
     {
-      "cliente_id": "CLI113",
-      "nombre": "Cliente de prueba 113",
+      "cliente_id": "CLI069",
+      "nombre": "Cliente de prueba 069",
       "estado": "frio",
-      "riesgo_desercion": 0.4465,
-      "dias_sin_compra": 118,
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 74,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI076",
+      "nombre": "Cliente de prueba 076",
+      "estado": "frio",
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 194,
+      "prioridad": "alta"
+    },
+    {
+      "cliente_id": "CLI080",
+      "nombre": "Cliente de prueba 080",
+      "estado": "por_vencer",
+      "riesgo_desercion": 0.6372,
+      "dias_sin_compra": 68,
       "prioridad": "alta"
     }
   ],

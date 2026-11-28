@@ -48,6 +48,6 @@ Lo que sigue es conectar la primera fuente y correr dos semanas en paralelo con 
 | Pregunta | Respuesta corta |
 |---|---|
 | ¿De dónde salen los datos? | Archivos de prueba provistos en el reto; el pipeline es el mismo que usaría con sus archivos. |
-| ¿Qué tan confiable es? | Detecta 9 de cada 10 desertores (recall 0,91); como avisa de más, la lista se ordena por riesgo. |
+| ¿Qué tan confiable es? | Probamos dos modelos; se queda el que acierta más entre las 20 cuentas peores. En prueba acierta 8 de 20 (la regla simple, 11 de 20). La tabla está en el panel del modelo. |
 | ¿Se integra con nuestro sistema? | Sí por API (`POST /api/ingesta`); hoy simulado con archivos. |
 | ¿Cuánto cuesta? | Un servidor pequeño; corre sin licencias. |

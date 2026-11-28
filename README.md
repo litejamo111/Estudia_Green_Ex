@@ -19,7 +19,7 @@ data/entrada/*.csv ──► backend/pipeline_datos.py ──► data/salidas/da
                   data/salidas/*.json ──► frontend/ (estático)  y  API (opcional)
 ```
 
-- Modelo: regresión logística entrenada en el build (solo stdlib, sin red).
+- Modelo: logística o gradient boosting, entrenados en el build; se elige por top-20 en validación (sklearn es opcional, hay respaldo en stdlib).
 - La prioridad de seguimiento es una regla transparente; el riesgo es una probabilidad.
 - `backend/pruebas.py` ejecuta 9 pruebas de aceptación y deja evidencia en
   `docs/validacion/pruebas_ejecutadas.md`; el CI falla si alguna no pasa.

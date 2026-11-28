@@ -1,0 +1,3 @@
+# Opcional: habilita el candidato gradient boosting en el motor.
+# Si no está instalado, el motor usa solo la regresión logística (stdlib).
+scikit-learn==1.5.2

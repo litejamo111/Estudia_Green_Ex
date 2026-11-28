@@ -2,8 +2,8 @@
 FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
 WORKDIR /app
-COPY backend/requirements.txt backend/
-RUN pip install -r backend/requirements.txt
+COPY backend/requirements.txt backend/requirements-modelo.txt backend/
+RUN pip install -r backend/requirements.txt -r backend/requirements-modelo.txt
 COPY backend/ backend/
 COPY data/ data/
 COPY docs/documentacion/parametros_prueba.json docs/documentacion/parametros_prueba.json

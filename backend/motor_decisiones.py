@@ -156,12 +156,30 @@ def entrenar(filas, epocas=600, tasa=0.5, l2=1e-3):
     return {"variables": CAMPOS, "media": media, "desviacion": desviacion, "pesos": pesos}
 
 
+def entrenar_gbm(filas):
+    """Gradient boosting si scikit-learn está disponible; si no, devuelve None."""
+    try:
+        from sklearn.ensemble import GradientBoostingClassifier
+    except ImportError:
+        return None
+    clf = GradientBoostingClassifier(
+        n_estimators=150, max_depth=1, learning_rate=0.05,
+        min_samples_leaf=20, random_state=212026,
+    )
+    clf.fit([[f[c] for c in CAMPOS] for f in filas], [f["etiqueta"] for f in filas])
+    return {"tipo": "gbm", "clf": clf}
+
+
+def prob_gbm(modelo, fila):
+    return float(modelo["clf"].predict_proba([[fila[c] for c in CAMPOS]])[0][1])
+
+
 def probabilidad(modelo, fila):
     return sigmoide(producto_punto(modelo["pesos"], vector(fila, modelo["media"], modelo["desviacion"])))
 
 
-def auc(filas, modelo):
-    pares = sorted((probabilidad(modelo, f), f["etiqueta"]) for f in filas)
+def auc(filas, score):
+    pares = sorted((score(f), f["etiqueta"]) for f in filas)
     rangos = [0.0] * len(pares)
     i = 0
     while i < len(pares):
@@ -201,11 +219,30 @@ def metricas(filas, predecir):
     }
 
 
-def elegir_umbral(validacion, modelo):
+def elegir_umbral(validacion, predecir):
+    """Umbral que maximiza F1 en validación (nunca en prueba)."""
     def criterio(u):
-        m = metricas(validacion, lambda f: probabilidad(modelo, f) >= u)
-        return (m["exactitud_balanceada"], -abs(u - 0.4))
+        m = metricas(validacion, lambda f: predecir(f) >= u)
+        return (m["F1"], m["exactitud_balanceada"])
     return max(UMBRALES, key=criterio)
+
+
+def precision_top(filas, predecir, k=20):
+    top = sorted(filas, key=predecir, reverse=True)[:k]
+    return round(sum(f["etiqueta"] for f in top) / max(1, len(top)), 4)
+
+
+def evaluar_candidato(nombre, prob, entrenamiento, validacion, prueba):
+    umbral = elegir_umbral(validacion, prob)
+    return {
+        "nombre": nombre,
+        "umbral": umbral,
+        "validacion": metricas(validacion, lambda f: prob(f) >= umbral),
+        "prueba": metricas(prueba, lambda f: prob(f) >= umbral),
+        "auc_validacion": auc(validacion, prob),
+        "top20_validacion": precision_top(validacion, prob),
+        "top20_prueba": precision_top(prueba, prob),
+    }
 
 
 def tasas_recompra(cortes, producto_ids, pares):
@@ -245,12 +282,22 @@ def main():
     prueba = [f for f in filas if f["corte"] >= "2026-07-01"]
 
     modelo = entrenar(entrenamiento)
-    umbral = elegir_umbral(validacion, modelo)
+    prob_log = lambda f: probabilidad(modelo, f)
+
+    candidatos = [evaluar_candidato("logistica", prob_log, entrenamiento, validacion, prueba)]
+    gbm = entrenar_gbm(entrenamiento)
+    if gbm is not None:
+        candidatos.append(evaluar_candidato("gradient_boosting", lambda f: prob_gbm(gbm, f), entrenamiento, validacion, prueba))
+
+    # La elección se hace SOLO con validación (nunca con el conjunto de prueba).
+    elegido = max(candidatos, key=lambda c: (c["top20_validacion"], c["auc_validacion"] or 0))
+    prob = prob_log if elegido["nombre"] == "logistica" else (lambda f: prob_gbm(gbm, f))
+    umbral = elegido["umbral"]
 
     regla = lambda f: f["recencia_dias"] > (f["ciclo_p75"] or 60)
     metricas_regla = metricas(prueba, regla)
     top_modelo = sum(
-        f["etiqueta"] for f in sorted(prueba, key=lambda f: probabilidad(modelo, f), reverse=True)[:20]
+        f["etiqueta"] for f in sorted(prueba, key=lambda f: prob(f), reverse=True)[:20]
     )
     top_regla = sum(f["etiqueta"] for f in sorted(prueba, key=regla, reverse=True)[:20])
 
@@ -259,7 +306,10 @@ def main():
         "corte_actual": str(corte_actual),
         "horizonte_dias": HORIZONTE_DIAS,
         "desercion": {
-            "modelo": "Regresión logística didáctica; etiqueta = sin compra en los próximos 60 días",
+            "modelo": "Clasificador de deserción; etiqueta = sin compra en los próximos 60 días",
+            "elegido": elegido["nombre"],
+            "criterio_eleccion": "precisión en el top 20 de validación (may–jun 2026); desempata AUC",
+            "candidatos": candidatos,
             "variables": CAMPOS,
             "media_entrenamiento": [round(x, 6) for x in modelo["media"]],
             "desviacion_entrenamiento": [round(x, 6) for x in modelo["desviacion"]],
@@ -267,10 +317,10 @@ def main():
             "umbral_riesgo": umbral,
             "criterio_umbral": "exactitud balanceada en validación",
             "entrenamiento": {"desde": "2025-03-31", "hasta": "2026-04-30", "filas": len(entrenamiento)},
-            "validacion": metricas(validacion, lambda f: probabilidad(modelo, f) >= umbral),
-            "prueba": metricas(prueba, lambda f: probabilidad(modelo, f) >= umbral),
+            "validacion": elegido["validacion"],
+            "prueba": elegido["prueba"],
             "regla_base_ciclo_propio": metricas_regla,
-            "auc_prueba": auc(prueba, modelo),
+            "auc_prueba": auc(prueba, prob),
             "top_20_prueba": {
                 "aciertos_modelo": top_modelo,
                 "aciertos_regla": top_regla,
@@ -306,7 +356,7 @@ def main():
             estado = "sin_historial"
         else:
             estado = estado_ventana(f["recencia_dias"], f["ciclo_p25"], f["ciclo_p75"])
-        riesgo = probabilidad(modelo, f)
+        riesgo = prob(f)
         clientes_decision.append({
             "cliente_id": c["cliente_id"],
             "nombre": c["nombre_prueba"],
@@ -375,6 +425,31 @@ def main():
         })
     productos_decision.sort(key=lambda x: (x["cliente_id"], x["producto_id"]))
 
+    # Serie histórica: cómo evoluciona la cartera corte a corte.
+    historico = []
+    for corte in sorted(set(cortes) | {corte_actual}):
+        probs, frios_hist, vencen, n = [], 0, 0, 0
+        for c in clientes:
+            if date.fromisoformat(c["fecha_alta"]) > corte:
+                continue
+            fh = features_cliente(c["cliente_id"], corte, ventas)
+            n += 1
+            probs.append(prob(fh))
+            if fh["compras_total"] and fh["recencia_dias"] >= 90:
+                frios_hist += 1
+            if fh["ciclo_p75"] is not None and estado_ventana(fh["recencia_dias"], fh["ciclo_p25"], fh["ciclo_p75"]) == "por_vencer":
+                vencen += 1
+        historico.append({
+            "corte": str(corte),
+            "clientes": n,
+            "frios": frios_hist,
+            "por_vencer": vencen,
+            "riesgo_promedio": round(sum(probs) / n, 4) if n else 0.0,
+        })
+    (SALIDAS / "historico.json").write_text(
+        json.dumps({"producto": "Predicta", "serie": historico}, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+
     # Agregados para el dashboard.
     estados = defaultdict(int)
     for c in clientes_decision:
@@ -425,6 +500,43 @@ def main():
     }
 
     resultados_modelo["tasas_producto"] = {pid: tasas[pid] for pid in sorted(tasas)}
+
+    # Ficha del modelo que realmente produce el riesgo del tablero.
+    metricas_modelo = {
+        "modelo": "Gradient boosting" if elegido["nombre"] == "gradient_boosting" else "Regresión logística",
+        "elegido": elegido["nombre"],
+        "entrenamiento_hasta": "2026-04-30",
+        "validacion": elegido["validacion"],
+        "prueba": "julio–septiembre 2026",
+        "ventana_objetivo_dias": HORIZONTE_DIAS,
+        "umbral_elegido_solo_en_validacion": umbral,
+        "variables": CAMPOS,
+        "prueba_modelo": elegido["prueba"],
+        "prueba_linea_base_compra_ultimos_30d": metricas_regla,
+        "top20_prueba": {
+            "modelo": elegido["top20_prueba"],
+            "regla": precision_top(prueba, regla),
+        },
+        "candidatos": [
+            {
+                "nombre": c["nombre"],
+                "umbral": c["umbral"],
+                "F1_validacion": c["validacion"]["F1"],
+                "F1_prueba": c["prueba"]["F1"],
+                "auc_validacion": c["auc_validacion"],
+                "top20_validacion": c["top20_validacion"],
+                "top20_prueba": c["top20_prueba"],
+            }
+            for c in candidatos
+        ],
+        "advertencia": (
+            "Datos de prueba. La etiqueta es 'sin compra en los próximos 60 días'. "
+            "El umbral se elige solo con validación; la prueba final no se usa para decidir."
+        ),
+    }
+    (SALIDAS / "metricas_modelo.json").write_text(
+        json.dumps(metricas_modelo, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     (SALIDAS / "modelos_decision.json").write_text(
         json.dumps(resultados_modelo, ensure_ascii=False, indent=2), encoding="utf-8"
     )

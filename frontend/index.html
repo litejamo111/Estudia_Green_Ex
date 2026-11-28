@@ -83,6 +83,30 @@
   .accion button{align-self:flex-start;background:#1b2430;color:var(--txt);border:1px solid #2c3947;border-radius:9px;
                  padding:7px 11px;font:12.5px inherit;cursor:pointer}
   .accion button:hover{border-color:var(--green);color:var(--green)}
+  .barra-plan{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .boton-suave{background:#151c23;color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:8px 12px;font:12.5px inherit;cursor:pointer}
+  .boton-suave:hover{border-color:var(--dim);background:#1a232b}
+  .boton-verde{background:#12261c;color:var(--green);border:1px solid #245038;border-radius:9px;padding:8px 12px;font:12.5px inherit;cursor:pointer}
+  .boton-verde:hover{background:#163425}
+  #evoChart svg{display:block;max-width:100%;height:auto}
+  #evoChart .barra-mes{fill:#243442}
+  #evoChart .barra-mes.actual{fill:var(--green)}
+  #evoChart .barra-frios{fill:var(--violet);opacity:.55}
+  #evoChart text{fill:#7f8b98;font:10px var(--mono)}
+  #zona-impresion{display:none}
+  @media print{
+    :root{color-scheme:light}
+    body{background:#fff!important;color:#111!important}
+    body > *:not(#zona-impresion){display:none!important}
+    #zona-impresion{display:block!important;font:12.5pt/1.45 system-ui;color:#111}
+    #zona-impresion h1{font-size:19pt;margin:0 0 2pt}
+    #zona-impresion .meta{color:#555;font-size:9.5pt;margin-bottom:14pt}
+    #zona-impresion .item{border:1px solid #ccc;border-left:3pt solid #111;border-radius:4pt;padding:9pt 11pt;margin:0 0 8pt;page-break-inside:avoid}
+    #zona-impresion .item h2{font-size:12pt;margin:0 0 3pt;text-transform:none;letter-spacing:0;color:#111}
+    #zona-impresion .item .quien{color:#555;font-size:9.5pt}
+    #zona-impresion .item .dato{margin:4pt 0 0}
+    #zona-impresion .pie{margin-top:14pt;color:#555;font-size:8.5pt;border-top:1px solid #ccc;padding-top:6pt}
+  }
   .ficha-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:14px}
   .ficha-head h3{margin:2px 0 0;font-size:19px}
   .ficha-sub{font:12px/1.4 var(--mono);color:var(--dim)}
@@ -101,10 +125,6 @@
   .vacio{color:var(--dim);font-size:13.5px}
   .vars{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 12px}
   .vars span{font:11.5px/1 var(--mono);color:#b9c6d2;background:#141b22;border:1px solid var(--line);border-radius:999px;padding:5px 9px}
-  .accion.gestionado{opacity:.5;border-left-color:#3a4652}
-  .accion.gestionado .hacer{text-decoration:line-through;color:var(--dim)}
-  .mini{background:none;border:0;color:var(--dim);font:12px inherit;cursor:pointer;padding:0;text-decoration:underline}
-  .mini:hover{color:var(--green)}
   .ok-badge{color:#0b1b12;background:var(--green);border-radius:6px;padding:2px 7px;font:600 11px/1.4 var(--mono)}
   .bad-badge{color:#2a0f0f;background:var(--red);border-radius:6px;padding:2px 7px;font:600 11px/1.4 var(--mono)}
   .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim)}
@@ -136,9 +156,12 @@
         El motor prioriza la cartera para este corte. Cada tarjeta dice a quién llamar, por qué y qué hacer.
       </p>
     </div>
-    <button id="recalc" type="button" hidden style="margin-left:auto;background:#12261c;color:var(--green);border:1px solid #245038;border-radius:10px;padding:9px 13px;font:13px inherit;cursor:pointer">
-      Recalcular con datos nuevos
-    </button>
+    <div class="barra-plan">
+      <button id="exp-pdf" type="button" class="boton-suave">PDF</button>
+      <button id="exp-xls" type="button" class="boton-suave">Excel</button>
+      <button id="exp-csv" type="button" class="boton-suave">CSV</button>
+      <button id="recalc" type="button" hidden class="boton-verde">Recalcular con datos nuevos</button>
+    </div>
   </div>
   <div class="acciones" id="acciones"></div>
 
@@ -156,6 +179,14 @@
       <div class="vars" id="modeloVars"></div>
       <div class="kv" id="modelo"></div>
       <p class="vacio" id="modeloNota" style="margin:12px 0 0;font-size:12.5px"></p>
+      <details style="margin-top:10px">
+        <summary style="cursor:pointer;color:var(--dim);font-size:12.5px">Comparación de candidatos</summary>
+        <table style="margin-top:8px">
+          <thead><tr><th>Modelo</th><th class="num">F1 test</th><th class="num">Top-20</th><th class="num">AUC val</th></tr></thead>
+          <tbody id="modeloCandidatos"></tbody>
+        </table>
+        <p class="vacio" style="font-size:11.5px;margin:8px 0 0">Top-20 = aciertos entre las 20 cuentas peor priorizadas. Se elige con validación; la prueba no decide.</p>
+      </details>
     </div>
   </div>
 
@@ -212,6 +243,15 @@
     </div>
   </div>
 
+  <h2>Evolución de la cartera</h2>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;margin-bottom:10px">
+      <div class="vacio" id="evoResumen">—</div>
+      <div class="vacio" id="evoDelta">—</div>
+    </div>
+    <div id="evoChart" style="width:100%;overflow-x:auto"></div>
+  </div>
+
   <h2>Estado del producto</h2>
   <div class="panel">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
@@ -227,6 +267,8 @@
       </table>
     </details>
   </div>
+
+  <div id="zona-impresion"></div>
 
   <div class="foot" id="pie">
     <strong>Predicta</strong> · prototipo sobre datos de práctica (corte 31 oct 2026). No son cifras reales de Green Services
@@ -249,14 +291,11 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
 
 (async () => {
   try{
-    const [dash, met, cli, cal, mod, prb] = await Promise.all([
+    const [dash, met, cli, cal, mod, prb, hist] = await Promise.all([
       j('dashboard.json'), j('metricas_modelo.json'), j('clientes_decision.json'), j('reporte_calidad.json'),
-      j('modelos_decision.json'), j('pruebas.json')
+      j('modelos_decision.json'), j('pruebas.json'), j('historico.json')
     ]);
     const M = mod.desercion;
-    const CLAVE = 'predicta.gestionados';
-    const gestionados = new Set(JSON.parse(localStorage.getItem(CLAVE) || '[]'));
-    const guardarGestion = () => localStorage.setItem(CLAVE, JSON.stringify([...gestionados]));
     const sigm = z => 1/(1+Math.exp(-z));
     const riesgoCon = (c, d) => {
       const x = [c.recencia_dias + d.rec, c.compras_30d + d.c30, c.compras_90d + d.c90, c.compras_total + d.ct];
@@ -292,15 +331,14 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
 
     const pct1 = v => (v*100).toFixed(0) + ' %';
     const diasParaVencer = c => c.ventana_hasta ? Math.round((new Date(c.ventana_hasta) - new Date(dash.corte))/864e5) : null;
-    const cola = [...cli].sort((a,b) => (b.riesgo_desercion*Math.max(b.compras_total,1)) - (a.riesgo_desercion*Math.max(a.compras_total,1))).slice(0,6);
-    $('acciones').innerHTML = cola.map((c,i) => {
+    const plan = [...cli].sort((a,b) => (b.riesgo_desercion*Math.max(b.compras_total,1)) - (a.riesgo_desercion*Math.max(a.compras_total,1))).slice(0,6);
+    $('acciones').innerHTML = plan.map((c,i) => {
       const a = ACCION[c.estado] || ACCION.sin_historial;
       const dv = diasParaVencer(c);
       const motivo = c.compras_total
         ? `Lleva ${c.recencia_dias} días sin comprar · suele comprar cada ${Math.round(c.ciclo_p50 || 30)} días` + (dv!==null && dv>=0 && dv<=60 ? ` · cobertura vence en ${dv} días` : '')
         : 'Sin compras registradas';
-      const hecho = gestionados.has(c.cliente_id);
-      return `<article class="accion ${c.estado}${hecho ? ' gestionado' : ''}" data-id="${c.cliente_id}">
+      return `<article class="accion ${c.estado}" data-id="${c.cliente_id}">
         <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
           <h3>${i+1}. ${a.t}</h3><span class="pill ${c.prioridad}">${c.prioridad}</span>
         </div>
@@ -309,17 +347,37 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
         <div class="hacer">${a.h}</div>
         <div class="sim">riesgo de perderlo: <b>${pct1(c.riesgo_desercion)}</b>${
           c.ciclo_p50 && c.recencia_dias > c.ciclo_p50 ? ` · va ${Math.round(c.recencia_dias - c.ciclo_p50)} días tarde` : ''}</div>
-        <button type="button" class="mini" data-gestionar>${gestionados.has(c.cliente_id) ? '✓ Gestionado · deshacer' : 'Marcar como gestionado'}</button>
       </article>`;
     }).join('');
-    $('acciones').addEventListener('click', ev => {
-      const btn = ev.target.closest('[data-gestionar]'); if(!btn) return;
-      const art = btn.closest('.accion'); const id = art.dataset.id;
-      if (gestionados.has(id)) gestionados.delete(id); else gestionados.add(id);
-      guardarGestion();
-      art.classList.toggle('gestionado');
-      btn.textContent = gestionados.has(id) ? '✓ Gestionado · deshacer' : 'Marcar como gestionado';
-    });
+    if (met.candidatos) {
+      const NICE = {logistica:'Regresión logística', gradient_boosting:'Gradient boosting'};
+      $('modeloCandidatos').innerHTML = met.candidatos.map(c => `<tr${c.nombre === met.elegido ? ' style="background:#16241c"' : ''}>
+        <td>${NICE[c.nombre] || c.nombre}${c.nombre === met.elegido ? ' <span class="ok-badge">elegido</span>' : ''}</td>
+        <td class="num">${c.F1_prueba.toFixed(3).replace('.',',')}</td>
+        <td class="num">${Math.round(c.top20_prueba*100)} %</td>
+        <td class="num">${c.auc_validacion ?? '—'}</td></tr>`).join('');
+    }
+
+    const serie = hist.serie.filter(s => s.clientes >= 60).slice(-12);
+    if (serie.length) {
+      const W = 720, H = 148, pad = 26, bw = Math.max(14, Math.min(34, (W - pad*2) / serie.length - 8));
+      const maxR = Math.max(...serie.map(s => s.riesgo_promedio), 0.01);
+      const bar = serie.map((s, i) => {
+        const x = pad + i * ((W - pad*2) / serie.length);
+        const h = Math.max(2, (s.riesgo_promedio / maxR) * (H - 44));
+        const actual = i === serie.length - 1;
+        const mes = s.corte.slice(0, 7);
+        return `<g><rect class="barra-mes${actual ? ' actual' : ''}" x="${x.toFixed(1)}" y="${(H - 30 - h).toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="2">
+          <title>${mes} · riesgo promedio ${(s.riesgo_promedio*100).toFixed(1)} % · ${s.frios} fríos de ${s.clientes}</title></rect>
+          <text x="${(x + bw/2).toFixed(1)}" y="${H - 20}" text-anchor="middle">${mes.slice(2)}</text>
+          <text x="${(x + bw/2).toFixed(1)}" y="${(H - 36 - h).toFixed(1)}" text-anchor="middle">${Math.round(s.riesgo_promedio*100)}</text></g>`;
+      }).join('');
+      $('evoChart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Riesgo promedio por mes">${bar}</svg>`;
+      const a = serie[0], b = serie[serie.length - 1];
+      const dR = Math.round((b.riesgo_promedio - a.riesgo_promedio) * 100);
+      $('evoResumen').textContent = `Riesgo promedio por mes (altura) · cartera actual: ${b.clientes} clientes, ${b.frios} fríos`;
+      $('evoDelta').innerHTML = `desde ${a.corte.slice(0,7)}: <b style="color:${dR >= 0 ? 'var(--amber)' : 'var(--green)'}">${dR >= 0 ? '+' : ''}${dR} pts</b> de riesgo · fríos ${a.frios} → ${b.frios}`;
+    }
 
     $('pruebasResumen').innerHTML = `${prb.ok}/${prb.total} pruebas en verde` +
       (prb.ok === prb.total ? ' <span class="ok-badge">listo</span>' : ' <span class="bad-badge">revisar</span>');
@@ -328,6 +386,56 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       <td>${p.nombre}</td><td style="color:var(--dim);font-size:12.5px">${p.esperado}</td>
       <td style="font-family:var(--mono);font-size:12.5px">${p.obtenido}</td>
       <td>${p.ok ? '<span class="ok-badge">OK</span>' : '<span class="bad-badge">FALLA</span>'}</td></tr>`).join('');
+
+    // ---- Exportaciones del plan de hoy ----
+    const filasPlan = () => plan.map((c,i) => {
+      const a = ACCION[c.estado] || ACCION.sin_historial;
+      return { n: i+1, id: c.cliente_id, nombre: c.nombre, ciudad: c.ciudad, prioridad: c.prioridad,
+               riesgo: (c.riesgo_desercion*100).toFixed(0)+'%', dias: c.dias_sin_compra ?? '',
+               ciclo: c.ciclo_p50 ? Math.round(c.ciclo_p50)+' d' : '', accion: a.t, guion: a.h };
+    });
+    const descargar = (nombre, contenido, tipo) => {
+      const url = URL.createObjectURL(new Blob([contenido], {type: tipo}));
+      const a = document.createElement('a'); a.href = url; a.download = nombre; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+    };
+    const sello = new Date().toISOString().slice(0,10);
+
+    $('exp-csv').onclick = () => {
+      const cols = Object.keys(filasPlan()[0]);
+      const esc = v => `"${String(v).replace(/"/g, '""')}"`;
+      const txt = '\ufeff' + [cols.join(';'), ...filasPlan().map(f => cols.map(k => esc(f[k])).join(';'))].join('\r\n');
+      descargar(`predicta-plan-${sello}.csv`, txt, 'text/csv;charset=utf-8');
+    };
+
+    $('exp-xls').onclick = () => {
+      const filas = filasPlan();
+      const cols = [['n','#'],['id','Cliente'],['nombre','Nombre'],['ciudad','Ciudad'],['prioridad','Prioridad'],
+                    ['riesgo','Riesgo'],['dias','Días sin compra'],['ciclo','Ciclo habitual'],['accion','Acción'],['guion','Qué decir']];
+      const html = `<html><head><meta charset="utf-8"></head><body><table border="1">
+        <tr><th colspan="10" style="font-size:14pt">Predicta · Plan de hoy (corte ${dash.corte})</th></tr>
+        <tr>${cols.map(c => `<th>${c[1]}</th>`).join('')}</tr>
+        ${filas.map(f => `<tr>${cols.map(c => `<td>${String(f[c[0]]).replace(/</g,'&lt;')}</td>`).join('')}</tr>`).join('')}
+        </table><p>Datos de prueba. No son cifras reales de Green Services.</p></body></html>`;
+      descargar(`predicta-plan-${sello}.xls`, html, 'application/vnd.ms-excel');
+    };
+
+    $('exp-pdf').onclick = () => {
+      const filas = filasPlan();
+      $('zona-impresion').innerHTML = `
+        <h1>Predicta · Plan de hoy</h1>
+        <div class="meta">Corte ${dash.corte} · ${filas.length} cuentas priorizadas · generado ${sello}
+          · riesgo promedio de la cartera ${pct(k.riesgo_promedio)}</div>
+        ${filas.map(f => `<div class="item">
+          <h2>${f.n}. ${f.accion} — ${f.nombre}</h2>
+          <div class="quien">${f.id} · ${f.ciudad} · prioridad ${f.prioridad}</div>
+          <div class="dato"><b>Riesgo de perderlo:</b> ${f.riesgo}${f.dias !== '' ? ` · ${f.dias} días sin comprar` : ''}${f.ciclo ? ` · ciclo habitual ${f.ciclo}` : ''}</div>
+          <div class="dato"><b>Qué hacer:</b> ${f.guion}</div>
+        </div>`).join('')}
+        <div class="pie">Predicta · datos de prueba (corte ${dash.corte}). El riesgo es una probabilidad, no una orden de compra.
+          Una prioridad alta indica revisar con el equipo comercial.</div>`;
+      window.print();
+    };
 
     $('recalc').onclick = async () => {
       $('recalc').textContent = 'Procesando…';
@@ -347,13 +455,14 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
 
     const v = met.validacion, pm = met.prueba_modelo, lb = met.prueba_linea_base_compra_ultimos_30d;
     const NOMBRES = {recencia_dias:'días sin comprar', compras_30d:'compras 30 d', compras_90d:'compras 90 d', compras_total:'compras históricas'};
-    $('modeloNombre').textContent = 'Regresión logística · 4 variables · entrenada en cada build';
+    $('modeloNombre').textContent = `${met.modelo} · ${(met.variables||M.variables).length} variables · entrenada en cada build`;
     $('modeloVars').innerHTML = (met.variables || M.variables).map(v => `<span>${NOMBRES[v] || v}</span>`).join('');
     $('modelo').innerHTML = [
-      ['Modelo', 'regresión logística'],
+      ['Modelo', met.modelo.toLowerCase()],
+      ['Elegido por', 'top-20 en validación'],
       ['Ventana', met.ventana_objetivo_dias + ' días'],
       ['Entrenado hasta', met.entrenamiento_hasta],
-      ['Umbral', met.umbral_elegido_solo_en_validacion],
+      ['Umbral de riesgo', met.umbral_elegido_solo_en_validacion],
       ['Precisión (prueba)', pct(pm.precision)],
       ['Exhaustividad (prueba)', pct(pm.recall)],
       ['F1 (prueba)', pm.F1.toFixed(3).replace('.',',')],

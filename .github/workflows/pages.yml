@@ -21,7 +21,9 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Pipeline + motor (solo stdlib)
+      - name: Dependencias del modelo (opcional, habilita boosting)
+        run: pip install -r backend/requirements-modelo.txt
+      - name: Pipeline + motor
         run: python backend/predicta.py ingesta
       - name: Pruebas de aceptación
         run: python backend/pruebas.py
