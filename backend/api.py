@@ -121,7 +121,20 @@ def version():
 
 @app.get("/metricas")
 def metricas():
+    """Ficha del modelo que produce el riesgo del tablero (candidatos, métricas, umbral)."""
+    return datos("metricas_modelo.json")
+
+
+@app.get("/modelos")
+def modelos():
+    """Artefacto completo del motor: pesos, candidatos y tasas por producto."""
     return datos("modelos_decision.json")
+
+
+@app.get("/historico")
+def historico():
+    """Serie mensual de la cartera (riesgo promedio, fríos, coberturas por vencer)."""
+    return datos("historico.json")
 
 
 @app.post("/ingesta")
