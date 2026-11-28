@@ -66,6 +66,12 @@
   .accion button{align-self:flex-start;background:#1b2430;color:var(--txt);border:1px solid #2c3947;border-radius:9px;
                  padding:7px 11px;font:12.5px inherit;cursor:pointer}
   .accion button:hover{border-color:var(--green);color:var(--green)}
+  .accion.gestionado{opacity:.5;border-left-color:#3a4652}
+  .accion.gestionado .hacer{text-decoration:line-through;color:var(--dim)}
+  .mini{background:none;border:0;color:var(--dim);font:12px inherit;cursor:pointer;padding:0;text-decoration:underline}
+  .mini:hover{color:var(--green)}
+  .ok-badge{color:#0b1b12;background:var(--green);border-radius:6px;padding:2px 7px;font:600 11px/1.4 var(--mono)}
+  .bad-badge{color:#2a0f0f;background:var(--red);border-radius:6px;padding:2px 7px;font:600 11px/1.4 var(--mono)}
   .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim)}
   .kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:13.5px}
   .kv span{color:var(--dim)} .kv b{font-family:var(--mono);font-weight:500}
@@ -147,10 +153,27 @@
     </div>
   </div>
 
-  <div class="foot">
+  <h2>Estado del producto</h2>
+  <div class="panel">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <b id="pruebasResumen" style="font-size:15px">—</b>
+      <span class="chip" id="pruebasFecha">—</span>
+      <a class="chip" href="data/resumen_clientes.csv" download style="margin-left:auto;text-decoration:none">Descargar cartera (CSV)</a>
+    </div>
+    <details style="margin-top:12px">
+      <summary style="cursor:pointer;color:var(--dim);font-size:13.5px">Ver las pruebas de aceptación</summary>
+      <table style="margin-top:10px">
+        <thead><tr><th>Prueba</th><th>Esperado</th><th>Obtenido</th><th>Estado</th></tr></thead>
+        <tbody id="pruebasBody"></tbody>
+      </table>
+    </details>
+  </div>
+
+  <div class="foot" id="pie">
     <strong>Predicta</strong> · prototipo sobre datos de práctica (corte 31 oct 2026). No son cifras reales de Green Services
     y no constituye una predicción validada en producción. La prioridad es una regla transparente; el riesgo proviene de un
     modelo didáctico comparado con una línea base.
+    <span id="version" style="font-family:var(--mono);white-space:nowrap"></span>
   </div>
 </div>
 
@@ -167,11 +190,14 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
 
 (async () => {
   try{
-    const [dash, met, cli, cal, mod] = await Promise.all([
+    const [dash, met, cli, cal, mod, prb] = await Promise.all([
       j('dashboard.json'), j('metricas_modelo.json'), j('clientes_decision.json'), j('reporte_calidad.json'),
-      j('modelos_decision.json')
+      j('modelos_decision.json'), j('pruebas.json')
     ]);
     const M = mod.desercion;
+    const CLAVE = 'predicta.gestionados';
+    const gestionados = new Set(JSON.parse(localStorage.getItem(CLAVE) || '[]'));
+    const guardarGestion = () => localStorage.setItem(CLAVE, JSON.stringify([...gestionados]));
     const sigm = z => 1/(1+Math.exp(-z));
     const riesgoCon = (c, d) => {
       const x = [c.recencia_dias + d.rec, c.compras_30d + d.c30, c.compras_90d + d.c90, c.compras_total + d.ct];
@@ -214,7 +240,8 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       const motivo = c.compras_total
         ? `Lleva ${c.recencia_dias} días sin comprar · suele comprar cada ${Math.round(c.ciclo_p50 || 30)} días` + (dv!==null && dv>=0 && dv<=60 ? ` · cobertura vence en ${dv} días` : '')
         : 'Sin compras registradas';
-      return `<article class="accion ${c.estado}" data-id="${c.cliente_id}">
+      const hecho = gestionados.has(c.cliente_id);
+      return `<article class="accion ${c.estado}${hecho ? ' gestionado' : ''}" data-id="${c.cliente_id}">
         <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
           <h3>${i+1}. ${a.t}</h3><span class="pill ${c.prioridad}">${c.prioridad}</span>
         </div>
@@ -223,8 +250,26 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
         <div class="hacer">${a.h}</div>
         <div class="sim">riesgo de perderlo: <b>${pct1(c.riesgo_desercion)}</b>${
           c.ciclo_p50 && c.recencia_dias > c.ciclo_p50 ? ` · va ${Math.round(c.recencia_dias - c.ciclo_p50)} días tarde` : ''}</div>
+        <button type="button" class="mini" data-gestionar>${gestionados.has(c.cliente_id) ? '✓ Gestionado · deshacer' : 'Marcar como gestionado'}</button>
       </article>`;
     }).join('');
+    $('acciones').addEventListener('click', ev => {
+      const btn = ev.target.closest('[data-gestionar]'); if(!btn) return;
+      const art = btn.closest('.accion'); const id = art.dataset.id;
+      if (gestionados.has(id)) gestionados.delete(id); else gestionados.add(id);
+      guardarGestion();
+      art.classList.toggle('gestionado');
+      btn.textContent = gestionados.has(id) ? '✓ Gestionado · deshacer' : 'Marcar como gestionado';
+    });
+
+    $('pruebasResumen').innerHTML = `${prb.ok}/${prb.total} pruebas en verde` +
+      (prb.ok === prb.total ? ' <span class="ok-badge">listo</span>' : ' <span class="bad-badge">revisar</span>');
+    $('pruebasFecha').textContent = 'ejecutadas ' + prb.generado.replace('T', ' ').slice(0, 16);
+    $('pruebasBody').innerHTML = prb.pruebas.map(p => `<tr>
+      <td>${p.nombre}</td><td style="color:var(--dim);font-size:12.5px">${p.esperado}</td>
+      <td style="font-family:var(--mono);font-size:12.5px">${p.obtenido}</td>
+      <td>${p.ok ? '<span class="ok-badge">OK</span>' : '<span class="bad-badge">FALLA</span>'}</td></tr>`).join('');
+
     $('recalc').onclick = async () => {
       $('recalc').textContent = 'Procesando…';
       try{
@@ -272,10 +317,11 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       if (f === 'alta') rows = rows.filter(c => c.prioridad === 'alta');
       if (f === 'riesgo') rows = rows.filter(c => c.riesgo_desercion >= 0.5);
       $('conteo').textContent = rows.length + ' de ' + cli.length;
-      $('body').innerHTML = rows.map(c => `<tr data-id="${c.cliente_id}" style="cursor:pointer">
+      $('body').innerHTML = rows.length ? rows.map(c => `<tr data-id="${c.cliente_id}" style="cursor:pointer">
         <td>${c.cliente_id}</td><td>${c.nombre}</td><td>${c.ciudad}</td>
         <td class="num">${c.riesgo_desercion.toFixed(3).replace('.',',')}</td>
-        <td>${pill(c.prioridad)}</td><td class="num">${c.compras_90d}</td></tr>`).join('');
+        <td>${pill(c.prioridad)}</td><td class="num">${c.compras_90d}</td></tr>`).join('')
+        : '<tr><td colspan="6" style="color:var(--dim);padding:18px 10px">Sin resultados para esa búsqueda.</td></tr>';
       $('body').querySelectorAll('tr').forEach(tr => tr.onclick = () => {
         $('body').querySelectorAll('tr').forEach(x => x.classList.remove('sel'));
         tr.classList.add('sel');
@@ -292,6 +338,8 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       });
     };
     $('q').oninput = render; $('filtro').onchange = render; render();
+    try{ const v = await (await fetch('version.json')).json();
+      $('version').textContent = `v${v.version} · ${v.commit} · ${v.build.slice(0,10)}`; }catch(e){}
   } catch (e) {
     document.body.insertAdjacentHTML('afterbegin', `<div class="wrap"><p class="err">No se pudieron cargar los datos: ${e.message}. Ejecuta <code>bash deploy/build.sh</code> y sirve <code>_site</code>.</p></div>`);
   }

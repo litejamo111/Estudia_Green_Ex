@@ -10,4 +10,6 @@ cp -r frontend/. _site/
 touch _site/.nojekyll
 cp data/salidas/*.json _site/data/
 cp data/salidas/resumen_clientes.csv _site/data/ 2>/dev/null || true
+printf '{"version":"1.0.0","commit":"%s","build":"%s"}' \
+  "$(git rev-parse --short HEAD 2>/dev/null || echo local)" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > _site/version.json
 echo "_site listo ($(du -sh _site | cut -f1))"

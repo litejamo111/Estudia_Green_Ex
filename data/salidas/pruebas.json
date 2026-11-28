@@ -1,0 +1,72 @@
+{
+  "producto": "Predicta",
+  "generado": "2026-11-28T00:32:28",
+  "corte": "2026-10-31",
+  "total": 9,
+  "ok": 9,
+  "pruebas": [
+    {
+      "nombre": "Conversión en COP",
+      "esperado": "180.000,00 COP",
+      "obtenido": "180.000.00 COP",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Conversión USD→COP con TRM del día",
+      "esperado": "1,228,218.00 COP",
+      "obtenido": "1,228,218.00 COP",
+      "ok": true,
+      "detalle": "TRM 2025-01-06 = 4094.06"
+    },
+    {
+      "nombre": "Exclusión de ventas anuladas",
+      "esperado": "1371 confirmadas · 36 anuladas",
+      "obtenido": "1371 confirmadas · 36 anuladas",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Frontera de cliente frío (90 días)",
+      "esperado": "90 días = frío · 89 días = no frío",
+      "obtenido": "90 días = frío · 89 días = no frío",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Frontera de renovación (45 días)",
+      "esperado": "día 45 = próximo · día 46 = fuera",
+      "obtenido": "día 45 = próximo · día 46 = fuera",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Coherencia tablero ↔ decisiones",
+      "esperado": "14 por vencer en ambos",
+      "obtenido": "tablero 14 · decisiones 14",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Cliente inexistente (CLI999)",
+      "esperado": "no aparece en la cartera",
+      "obtenido": "no aparece",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Ausencia de datos futuros",
+      "esperado": "fecha máxima ≤ 2026-10-31",
+      "obtenido": "fecha máxima = 2026-10-30",
+      "ok": true,
+      "detalle": ""
+    },
+    {
+      "nombre": "Integridad de claves de cliente",
+      "esperado": "0 ventas huérfanas",
+      "obtenido": "0 ventas huérfanas",
+      "ok": true,
+      "detalle": ""
+    }
+  ]
+}

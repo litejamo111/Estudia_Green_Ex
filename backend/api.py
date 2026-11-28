@@ -108,6 +108,17 @@ def productos():
     return {"productos": datos("dashboard.json")["productos"]}
 
 
+@app.get("/pruebas", tags=["calidad"])
+def pruebas():
+    """Pruebas de aceptación ejecutadas en el último build (evidencia, no marketing)."""
+    return datos("pruebas.json")
+
+
+@app.get("/version")
+def version():
+    return {"producto": "Predicta", "version": "1.0.0", "corte": datos("dashboard.json")["corte"]}
+
+
 @app.get("/metricas")
 def metricas():
     return datos("modelos_decision.json")

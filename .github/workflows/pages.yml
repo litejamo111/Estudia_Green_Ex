@@ -23,6 +23,8 @@ jobs:
           python-version: '3.12'
       - name: Pipeline + motor (solo stdlib)
         run: python backend/predicta.py ingesta
+      - name: Pruebas de aceptación
+        run: python backend/pruebas.py
       - name: Ensamblar _site
         run: bash deploy/build.sh
       - uses: actions/upload-pages-artifact@v5
