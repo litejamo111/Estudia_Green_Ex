@@ -8,6 +8,12 @@ apt-get update -y
 apt-get install -y ca-certificates curl git python3
 command -v docker >/dev/null || curl -fsSL https://get.docker.com | sh
 
+# e2-micro (1 GB) no aguanta el build de Docker sin swap
+if [[ $(awk '/MemTotal/{print int($2/1024)}' /proc/meminfo) -lt 2000 && ! -f /swapfile ]]; then
+  fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+  echo '/swapfile none swap sw 0 0' >> /etc/fstab
+fi
+
 [[ -d $DIR/.git ]] || git clone --depth 1 "$REPO" "$DIR"
 cd "$DIR"
 
