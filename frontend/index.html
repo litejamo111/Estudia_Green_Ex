@@ -53,6 +53,19 @@
   input{min-width:220px;flex:1}
   .scroll{max-height:420px;overflow:auto}
   .detail{font-family:var(--mono);font-size:12.5px;color:var(--dim);white-space:pre-wrap;margin:0}
+  .acciones{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+  .accion{background:linear-gradient(180deg,#12181d,#0e1317);border:1px solid var(--line);border-left:3px solid var(--violet);
+          border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s}
+  .accion.frio{border-left-color:var(--red)} .accion.por_vencer{border-left-color:var(--amber)}
+  .accion.en_ventana{border-left-color:var(--green)} .accion.sin_historial{border-left-color:#4a5560}
+  .accion h3{margin:0;font-size:16px;letter-spacing:0}
+  .accion .quien{font:12px/1.4 var(--mono);color:var(--dim)}
+  .accion .motivo{font-size:13.5px;color:#c7d2dc}
+  .accion .hacer{font-size:13.5px;color:var(--txt);background:#141d18;border:1px dashed #2a4033;border-radius:9px;padding:8px 10px}
+  .accion .sim{font:13px/1.4 var(--mono);color:var(--green);min-height:18px}
+  .accion button{align-self:flex-start;background:#1b2430;color:var(--txt);border:1px solid #2c3947;border-radius:9px;
+                 padding:7px 11px;font:12.5px inherit;cursor:pointer}
+  .accion button:hover{border-color:var(--green);color:var(--green)}
   .foot{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--dim)}
   .kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:13.5px}
   .kv span{color:var(--dim)} .kv b{font-family:var(--mono);font-weight:500}
@@ -74,6 +87,19 @@
 
   <h2>Tablero de operaciones</h2>
   <div class="grid" id="kpis"></div>
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>
+      <h2 style="margin-bottom:4px">Plan de hoy · qué hacer primero</h2>
+      <p style="color:var(--dim);font-size:13.5px;margin:0 0 12px">
+        El motor prioriza la cartera para este corte. Cada tarjeta dice a quién llamar, por qué y qué hacer.
+      </p>
+    </div>
+    <button id="recalc" type="button" hidden style="margin-left:auto;background:#12261c;color:var(--green);border:1px solid #245038;border-radius:10px;padding:9px 13px;font:13px inherit;cursor:pointer">
+      Recalcular con datos nuevos
+    </button>
+  </div>
+  <div class="acciones" id="acciones"></div>
 
   <div class="two" style="margin-top:12px">
     <div class="panel">
@@ -141,15 +167,31 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
 
 (async () => {
   try{
-    const [dash, met, cli, cal] = await Promise.all([
-      j('dashboard.json'), j('metricas_modelo.json'), j('clientes_decision.json'), j('reporte_calidad.json')
+    const [dash, met, cli, cal, mod] = await Promise.all([
+      j('dashboard.json'), j('metricas_modelo.json'), j('clientes_decision.json'), j('reporte_calidad.json'),
+      j('modelos_decision.json')
     ]);
+    const M = mod.desercion;
+    const sigm = z => 1/(1+Math.exp(-z));
+    const riesgoCon = (c, d) => {
+      const x = [c.recencia_dias + d.rec, c.compras_30d + d.c30, c.compras_90d + d.c90, c.compras_total + d.ct];
+      let z = M.pesos[0];
+      x.forEach((v,i) => { z += M.pesos[i+1] * ((v - M.media_entrenamiento[i]) / M.desviacion_entrenamiento[i]) });
+      return sigm(z);
+    };
+    const ACCION = {
+      frio:        {t:'Reactivar cuenta', h:'Llamar hoy con oferta de reactivación y confirmar si sigue operando.'},
+      por_vencer:  {t:'Renovar cobertura', h:'Llamar antes del vencimiento y enviar la cotización de renovación.'},
+      en_ventana:  {t:'Asegurar la recompra', h:'Está en su ventana habitual: llamar y cerrar el pedido.'},
+      sin_historial:{t:'Primer contacto', h:'Validar datos y presentar el portafolio.'}
+    };
 
     $('corte').textContent = 'corte ' + dash.corte;
     try{
       const r = await fetch('api/salud',{cache:'no-store'});
       $('apiLink').textContent = r.ok ? 'API en vivo' : 'datos estáticos';
-      if(!r.ok) $('apiLink').removeAttribute('href');
+      if(r.ok) $('recalc').hidden = false;
+      else $('apiLink').removeAttribute('href');
     }catch(e){ $('apiLink').textContent = 'datos estáticos'; $('apiLink').removeAttribute('href') }
     const k = dash.kpis;
     $('kpis').innerHTML = [
@@ -162,6 +204,36 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
       kpi(k.clientes_prioridad_alta,'prioridad alta','alert'),
       kpi(k.recientes,'compras recientes','ok')
     ].join('');
+
+    const pct1 = v => (v*100).toFixed(0) + ' %';
+    const diasParaVencer = c => c.ventana_hasta ? Math.round((new Date(c.ventana_hasta) - new Date(dash.corte))/864e5) : null;
+    const cola = [...cli].sort((a,b) => (b.riesgo_desercion*Math.max(b.compras_total,1)) - (a.riesgo_desercion*Math.max(a.compras_total,1))).slice(0,6);
+    $('acciones').innerHTML = cola.map((c,i) => {
+      const a = ACCION[c.estado] || ACCION.sin_historial;
+      const dv = diasParaVencer(c);
+      const motivo = c.compras_total
+        ? `Lleva ${c.recencia_dias} días sin comprar · suele comprar cada ${Math.round(c.ciclo_p50 || 30)} días` + (dv!==null && dv>=0 && dv<=60 ? ` · cobertura vence en ${dv} días` : '')
+        : 'Sin compras registradas';
+      return `<article class="accion ${c.estado}" data-id="${c.cliente_id}">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline">
+          <h3>${i+1}. ${a.t}</h3><span class="pill ${c.prioridad}">${c.prioridad}</span>
+        </div>
+        <div class="quien">${c.nombre} · ${c.ciudad} · ${c.cliente_id}</div>
+        <div class="motivo">${motivo}</div>
+        <div class="hacer">${a.h}</div>
+        <div class="sim">riesgo de perderlo: <b>${pct1(c.riesgo_desercion)}</b>${
+          c.ciclo_p50 && c.recencia_dias > c.ciclo_p50 ? ` · va ${Math.round(c.recencia_dias - c.ciclo_p50)} días tarde` : ''}</div>
+      </article>`;
+    }).join('');
+    $('recalc').onclick = async () => {
+      $('recalc').textContent = 'Procesando…';
+      try{
+        const r = await fetch('api/ingesta', {method:'POST'});
+        const d = await r.json();
+        $('recalc').textContent = 'Listo en ' + Math.round(d.duracion_total_s * 10)/10 + ' s · recargando';
+        setTimeout(() => location.reload(), 700);
+      }catch(e){ $('recalc').textContent = 'Error al recalcular'; }
+    };
 
     $('top').innerHTML = dash.top_riesgo.map(c => `<tr>
       <td>${c.cliente_id}<br><span style="color:var(--dim);font-size:12px">${c.nombre}</span></td>
@@ -214,7 +286,8 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
           ultima_compra: c.ultima_compra, dias_sin_compra: c.dias_sin_compra,
           compras_90d: c.compras_90d, ingreso_90d_cop: c.ingreso_90d_cop,
           ciclo_p25: c.ciclo_p25, ciclo_p50: c.ciclo_p50, ciclo_p75: c.ciclo_p75,
-          ventana_desde: c.ventana_desde, ventana_hasta: c.ventana_hasta
+          ventana_desde: c.ventana_desde, ventana_hasta: c.ventana_hasta,
+          riesgo_si_compra_hoy: +riesgoCon(c,{rec:0,c30:1,c90:1,ct:1}).toFixed(4)
         }, null, 2);
       });
     };
