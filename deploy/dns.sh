@@ -3,6 +3,8 @@
 # Requiere: gh autenticado. Opcional: CF_API_TOKEN + CF_ZONE_ID para Cloudflare.
 # Uso: bash deploy/dns.sh
 set -euo pipefail
+# Carga .env (ignorado por git) si existe
+if [[ -f .env ]]; then set -a; . ./.env; set +a; fi
 DOMINIO="${DOMINIO:-predicta.jdlforge.dev}"
 REPO="${REPO:-litejamo111/Estudia_Green_Ex}"
 TARGET="${TARGET:-litejamo111.github.io}"
@@ -17,7 +19,14 @@ gh api -X PUT "repos/$REPO/pages" -f "cname=$DOMINIO" >/dev/null 2>&1 \
   && echo "   cname=$DOMINIO" || echo "   Ajusta el dominio manualmente en Settings > Pages"
 
 echo "== 3. DNS"
-if [[ -n "${CF_API_TOKEN:-}" && -n "${CF_ZONE_ID:-}" ]]; then
+if [[ -n "${CF_API_TOKEN:-}" ]]; then
+  if [[ -z "${CF_ZONE_ID:-}" ]]; then
+    CF_ZONE_ID=$(curl -s "https://api.cloudflare.com/client/v4/zones?name=${CF_ZONE_NAME:-jdlforge.dev}" \
+      -H "Authorization: Bearer $CF_API_TOKEN" \
+      | python3 -c 'import sys,json;r=json.load(sys.stdin).get("result") or [];print(r[0]["id"] if r else "")')
+    [[ -z "$CF_ZONE_ID" ]] && { echo "   No pude resolver CF_ZONE_ID (¿token sin permiso Zone:Read?)"; exit 1; }
+    echo "   zone_id=$CF_ZONE_ID"
+  fi
   API="https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID/dns_records"
   ID=$(curl -s -H "Authorization: Bearer $CF_API_TOKEN" "$API?type=CNAME&name=$DOMINIO" \
         | python3 -c 'import sys,json;r=json.load(sys.stdin)["result"];print(r[0]["id"] if r else "")')
