@@ -24,6 +24,7 @@
   .brand b{font-size:22px;letter-spacing:.16em}
   .brand span{font-size:12px;color:var(--dim);letter-spacing:.24em;text-transform:uppercase}
   .chips{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  a.chip{text-decoration:none}
   .chip{font:12px/1 var(--mono);padding:7px 10px;border:1px solid var(--line);border-radius:999px;color:var(--dim)}
   .chip.warn{border-color:#5a4614;color:var(--amber)}
   h2{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:34px 0 12px;font-weight:600}
@@ -67,6 +68,7 @@
       <span class="chip" id="corte">corte —</span>
       <span class="chip">120 clientes</span>
       <span class="chip warn">datos de prueba</span>
+      <a class="chip" id="apiLink" href="api/docs" target="_blank" rel="noopener">API</a>
     </div>
   </header>
 
@@ -144,6 +146,11 @@ function riesgo(v){ const w=Math.min(100,v*100).toFixed(0); return `<div style="
     ]);
 
     $('corte').textContent = 'corte ' + dash.corte;
+    try{
+      const r = await fetch('api/salud',{cache:'no-store'});
+      $('apiLink').textContent = r.ok ? 'API en vivo' : 'datos estáticos';
+      if(!r.ok) $('apiLink').removeAttribute('href');
+    }catch(e){ $('apiLink').textContent = 'datos estáticos'; $('apiLink').removeAttribute('href') }
     const k = dash.kpis;
     $('kpis').innerHTML = [
       kpi(k.clientes,'clientes en cartera'),

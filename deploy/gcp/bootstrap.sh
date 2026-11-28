@@ -23,4 +23,8 @@ docker compose -f deploy/gcp/docker-compose.yml up -d --build
 
 echo "== estado"
 docker compose -f deploy/gcp/docker-compose.yml ps
-curl -s -o /dev/null -w "local api: %{http_code}\n" http://127.0.0.1:8000/salud || true
+for i in $(seq 1 20); do
+  if docker compose -f deploy/gcp/docker-compose.yml exec -T web wget -qO- http://api:8000/salud >/dev/null 2>&1; then
+    echo "api: ok"; break
+  fi; sleep 5
+done
