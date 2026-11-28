@@ -4,7 +4,7 @@ services:
       context: ../..
       dockerfile: backend/Dockerfile
     restart: unless-stopped
-    environment: ["PORT=8000"]
+    environment: ["PORT=8000", "ROOT_PATH=/api"]
     volumes:
       - ../../data:/app/data
   web:

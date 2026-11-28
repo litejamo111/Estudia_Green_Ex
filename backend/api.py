@@ -22,7 +22,13 @@ from fastapi.middleware.cors import CORSMiddleware
 RAIZ = Path(__file__).resolve().parents[1]
 SALIDAS = RAIZ / "data" / "salidas"
 
-app = FastAPI(title="Predicta API", version="0.1.0", description="Deserción y recompra por producto")
+app = FastAPI(
+    title="Predicta API",
+    version="0.1.0",
+    description="Deserción y recompra por producto",
+    # Detrás de Caddy con /api: Swagger debe pedir /api/openapi.json
+    root_path=os.environ.get("ROOT_PATH", ""),
+)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
