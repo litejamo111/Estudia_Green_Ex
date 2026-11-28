@@ -1,6 +1,6 @@
 # Dump · Encuentros 1 y 2 — Predicta (Greenex / Green Services)
 
-> Extracción y organización de lo declarado en `Hackathon.html` (equipo E-2AVJ, reto «IA en operaciones»), contrastado con `LEEME.md`, `02_Documentacion/Guia_estudiante_EDITABLE.md`, `05_Validacion/` y el estado real de `06_Mvp/` y `Salidas/`.
+> Extracción y organización de lo declarado en `Hackathon.html` (equipo E-2AVJ, reto «IA en operaciones»), contrastado con `LEEME.md`, `docs/documentacion/Guia_estudiante_EDITABLE.md`, `docs/validacion/` y el estado real de `backend/` y `data/salidas/`.
 > **No se construyó nada.** Este documento solo ordena: (a) lo que el plan dice, (b) lo que se puede / no se puede hacer, (c) brechas y pendientes de decisión.
 
 ---
@@ -80,7 +80,7 @@ Solo hay **1 tarjeta**, en estado **Pendiente**, con dos ideas mezcladas:
 ### 4.2 Datos
 | ✅ Se puede | ❌ No se puede |
 |---|---|
-| Usar `01_Datos/*` (120 clientes, 10 productos, 1407 ventas, 240 compras, 243 instalaciones, 669 TRM de prueba). | Afirmar que son datos, precios, TRM o políticas reales de Green Services. |
+| Usar `data/entrada/*` (120 clientes, 10 productos, 1407 ventas, 240 compras, 243 instalaciones, 669 TRM de prueba). | Afirmar que son datos, precios, TRM o políticas reales de Green Services. |
 | Convertir USD→COP con `cop_por_usd` de **la misma fecha**; dejar COP sin convertir. | Sumar monedas sin conversión. |
 | Filtrar solo ventas `Confirmada`. | Incluir `Anulada` en los indicadores. |
 | Agregar **antes** de cruzar ventas y compras. | Unir todas las filas de ventas con todas las de compras por producto (muchos-a-muchos duplica importes). |
@@ -122,7 +122,7 @@ Solo hay **1 tarjeta**, en estado **Pendiente**, con dos ideas mezcladas:
 3. **Sin evidencia de ejecución:** ninguna prueba marcada `Realizada`, aunque el logro afirma que el script ya genera un DataFrame.
 4. **Criterio no medible:** «pocos segundos» y «cero errores» no tienen umbral ni forma de comprobación.
 5. **Deriva de alcance E1 → E2:** se prometió BD relacional + dashboard; se reportó repo + script + DataFrame.
-6. **Recursos vs. realidad:** E1 lista Docker y BD relacional; `06_Mvp/` usa CSV/JSON + FastAPI, sin BD.
+6. **Recursos vs. realidad:** E1 lista Docker y BD relacional; `backend/` usa CSV/JSON + FastAPI, sin BD.
 7. **Usuario objetivo difuso:** la solución menciona «la gerencia y los comerciales»; la guía pide **un** usuario principal (Operaciones, comercial o Gerencia Financiera).
 8. **Mejoras de E2 centradas en el equipo** (roles, autodidactismo), no en producto ni en hallazgos de pruebas.
 9. **Duplicidad de pruebas** entre la prueba piloto de E1 y la P1 de E2, sin trazabilidad entre ambas.
@@ -149,6 +149,6 @@ Solo hay **1 tarjeta**, en estado **Pendiente**, con dos ideas mezcladas:
 | Motor | `06_Mvp/motor_decisiones.py` | 449 líneas, el más extenso |
 | API | `06_Mvp/api.py` + `requirements.txt` | fastapi, pydantic<2, uvicorn |
 | Salidas | `Salidas/*.json, *.csv` | 11 artefactos ya generados |
-| Ejemplos guía | `04_Codigo/ejemplo_operaciones.py`, `modelo_compra.py` | stdlib, sin dependencias |
+| Ejemplos guía | `docs/ejemplos/ejemplo_operaciones.py`, `modelo_compra.py` | stdlib, sin dependencias |
 
 > Conclusión del dump: el producto declarado es viable con los recursos dados, pero la bitácora de E2 **no documenta** las pruebas exigidas ni evidencia su estado. Ese es el hueco principal a resolver antes de E3.

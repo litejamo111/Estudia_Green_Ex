@@ -21,7 +21,8 @@ Señalar la pantalla: `https://predicta.jdlforge.dev`
    *Reactivar cuenta · lleva 219 días sin comprar · suele comprar cada 9 · riesgo 48 %*.
    Eso es una llamada concreta, no un gráfico."
 3. **Cartera:** escribir `CLI016` → ficha con última compra, ciclo, riesgo. "Cualquiera del equipo
-   comercial puede hacer esto sin saber Excel."
+   comercial puede hacer esto sin saber Excel." Bajar hasta **Estado del producto**: *9/9 pruebas en
+   verde*. "Esto no es una maqueta: cada cifra tiene una prueba que la respalda."
 
 ## 1:50–2:30 · En vivo (el momento clave)
 Clic en **"Recalcular con datos nuevos"** → 2–3 s → la página se recarga con cifras nuevas.
